@@ -20,6 +20,7 @@ public class ExamType {
     String examTypeName;
 
     @OneToMany(mappedBy = "examType", cascade = CascadeType.ALL)
+
     List<Exam> exams=new ArrayList<>() ;
 
 

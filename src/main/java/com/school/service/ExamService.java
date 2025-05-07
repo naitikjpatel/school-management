@@ -29,25 +29,27 @@ public class ExamService {
         exam.setExamType(examType);
         //subject find
         Subject subject=subjectService.getSubjectById(exam.getSubjects().getSubjectId());
+
         exam.setSubjects(subject);
 
         return examRepository.save(exam); // save only Exam, not ExamType
     }
 
     //Delete Exam Service
-    public Exam deleteExam(Long examId){
-        Exam exam=examRepository.findById(examId).get();
-        if (exam!=null){
-            examRepository.delete(exam);
-            return exam;
-        }
-        return null;
+    public Exam deleteExamById(Long examId){
+        Exam exam= examRepository.findById(examId).orElseThrow(() -> new ResourceNotFoundException("Exam is not found with id" + examId));
+        return exam;
     }
 
     //Get Exam By id
     public Exam getExamById(Long examId){
-        Exam exam=examRepository.findById(examId).get();
-        return exam;
+//        Exam exam=examRepository.findById(examId).get();
+//        if (exam!=null){
+//            return exam;
+//        }
+//        return null;
+        return examRepository.findById(examId).orElseThrow(() -> new ResourceNotFoundException("Exam is not found with id" + examId));
+
     }
 
     //Get All Exam
