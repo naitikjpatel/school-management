@@ -15,11 +15,11 @@ public class ExamTypeService {
     @Autowired
     private ExamTypeRepository examTypeRepository;
 
-    public List<ExamType> findAll() {
+    public List<ExamType> getAllExamTypes() {
         return examTypeRepository.findAll();
     }
 
-    public ExamType findById(Long id) {
+    public ExamType getExamTypeById(Long id) {
         return examTypeRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("ExamType is not found with id" + id));
     }
 

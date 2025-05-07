@@ -7,6 +7,8 @@ import jakarta.persistence.ManyToOne;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -15,5 +17,6 @@ public class SubjectDto {
     Long subjectId;
     String subjectName;
     CourseDtoForSubject course;
-    Exam exam;
+    List<ExamDto> exam;
+
 }

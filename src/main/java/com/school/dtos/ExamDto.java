@@ -19,6 +19,19 @@ import java.util.List;
 public class ExamDto {
     Long examId;
     Date examDate;
-    ExamType examType;
-    List<Subject> subjects;
+    ExamTypeDtoForExam examType;
+    SubjectDtoForCourse subjects;
+
+    @Override
+    public String toString() {
+        return "ExamDto{" +
+                "examId=" + examId +
+                ", examDate=" + examDate +
+                ", examType=" + examType +
+                ", subjects=" + subjects +
+                '}';
+    }
 }
+
+//in case if infinte problem occure then in examDto make a SubjectDto and ExamTypeDto.
+//make a subjectdto and in that if there is dependent on the exam entity then remove it : if we not removing we getting the infinite response. so remove that dependancy

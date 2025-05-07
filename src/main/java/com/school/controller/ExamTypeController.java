@@ -34,7 +34,7 @@ public class ExamTypeController {
     //Get All ExamType
     @GetMapping("getAllExamType")
     public ResponseEntity<List<ExamTypeDto>> getAllExamType() {
-        List<ExamType> examTypeList = examTypeService.findAll();
+        List<ExamType> examTypeList = examTypeService.getAllExamTypes();
 
         if (examTypeList.size() > 0) {
             List<ExamTypeDto> examTypeDtoList = examTypeList.stream()
@@ -50,7 +50,7 @@ public class ExamTypeController {
     @GetMapping("{examTypeId}")
     public ResponseEntity<ExamTypeDto> getExamTypeById(@PathVariable("examTypeId") Long examTypeId) {
 
-        ExamType examType = examTypeService.findById(examTypeId);
+        ExamType examType = examTypeService.getExamTypeById(examTypeId);
         ExamTypeDto examTypeDto = ExamTypeMapper.toDto(examType);
         return new ResponseEntity<>(examTypeDto, HttpStatus.OK);
     }
