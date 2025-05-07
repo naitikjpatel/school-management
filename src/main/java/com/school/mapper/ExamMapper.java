@@ -12,10 +12,10 @@ public class ExamMapper {
         return exam;
     }
 
+
     public  static ExamDto toDto(Exam exam){
         ExamDto examDto = new ExamDto();
         BeanUtils.copyProperties(exam,examDto);
         return examDto;
     }
-
 }

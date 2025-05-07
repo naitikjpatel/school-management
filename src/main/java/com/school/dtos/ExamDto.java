@@ -20,5 +20,5 @@ public class ExamDto {
     Long examId;
     Date examDate;
     ExamType examType;
-    List<Subject> subjects;
+    Subject subjects;
 }
