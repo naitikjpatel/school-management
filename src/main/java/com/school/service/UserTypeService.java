@@ -15,10 +15,12 @@ public class UserTypeService {
     @Autowired
     private UserTypeRepository userTypeRepository;
 
+    //Add UserType Service
     public UserType addUserType(UserType userType) {
         return userTypeRepository.save(userType);
     }
 
+    //Update UserType Service
     public UserType updateUserType(UserType userType) {
 
 
@@ -33,15 +35,18 @@ public class UserTypeService {
         return null;
     }
 
+    //Get All UserType Service
     public List<UserType> getAllUserType() {
         return userTypeRepository.findAll();
     }
 
+    //Get UserType By Id Service
     public UserType getUserTypeById(Long id) {
         UserType userType = userTypeRepository.findById(id).orElse(null);
         return userType;
     }
 
+    //Delete UserType By Id Service
     public UserType deleteUserTypeById(Long id) {
         UserType userType = userTypeRepository.findById(id).orElse(null);
         if (userType != null) {

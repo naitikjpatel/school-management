@@ -15,15 +15,17 @@ public class ExamTypeService {
     @Autowired
     private ExamTypeRepository examTypeRepository;
 
+    //Get All ExamTypes Service
     public List<ExamType> getAllExamTypes() {
         return examTypeRepository.findAll();
     }
 
+    //Get ExamTypeById Service
     public ExamType getExamTypeById(Long id) {
         return examTypeRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("ExamType is not found with id" + id));
     }
 
-
+    //Delete ExamType By Id Service
     public ExamType deleteExamTypeById(Long id) {
         Optional<ExamType> examTypeOpt = examTypeRepository.findById(id);
         if (examTypeOpt.isPresent()) {
@@ -34,6 +36,7 @@ public class ExamTypeService {
 
     }
 
+    //Add ExamType Service
     public ExamType addExamType(ExamType examType) {
         String typeName = examType.getExamTypeName();
 
@@ -48,11 +51,10 @@ public class ExamTypeService {
     }
 
 
+    //Update ExamType Service
     public ExamType updateExamType(ExamType examT) {
-        ExamType examType = examTypeRepository.findById(examT.getExamTypeId())
-                .orElseThrow(() -> new ResourceNotFoundException("ExamType not found with id: " + examT.getExamTypeId()));
-        if (examT.getExamTypeName() != null)
-            examType.setExamTypeName(examT.getExamTypeName());
+        ExamType examType = examTypeRepository.findById(examT.getExamTypeId()).orElseThrow(() -> new ResourceNotFoundException("ExamType not found with id: " + examT.getExamTypeId()));
+        if (examT.getExamTypeName() != null) examType.setExamTypeName(examT.getExamTypeName());
         return examTypeRepository.save(examType);
     }
 

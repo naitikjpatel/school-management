@@ -20,15 +20,16 @@ public class UserDetailsService {
     @Autowired
     private UsersRepository usersRepository;
 
+//    Add UserDetails Service
     public UserDetails addUserDetails(UserDetails userDetails) {
         //find the user
 //        Users users=usersRepository.findById(userDetails.getUser().getUserId()).orElseThrow(()-> new ResourceNotFoundException("User Not Found With Id: " + userDetails.getUser().getUserId() ));
-
 //        userDetails.setUser(users);
         return userDetailsRepository.save(userDetails);
 
     }
 
+    //UpdateUserDetails Service
     public UserDetails updateUserDetails(UserDetails newUserDetails) {
         // First, check if the UserDetails with the given id exists.
         UserDetails existingUserDetails = userDetailsRepository.findById(newUserDetails.getUserDetailId())
@@ -49,6 +50,10 @@ public class UserDetailsService {
         return userDetailsRepository.save(existingUserDetails);
     }
 
+    //Get All UserDetails Service
+    public List<UserDetails> getAllUserDetails() {
+        return userDetailsRepository.findAll();
+    }
 
 //    public UserDetails deleteUserDetails(UserDetails userDetails){
 //        UserDetails userDetails1 = userDetailsRepository.findById(userDetails.getUserDetailId())
@@ -60,7 +65,5 @@ public class UserDetailsService {
 //        return userDetails1;
 //    }
 
-    public List<UserDetails> getAllUserDetails() {
-        return userDetailsRepository.findAll();
-    }
+
 }

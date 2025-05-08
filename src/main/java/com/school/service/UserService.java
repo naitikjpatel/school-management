@@ -79,7 +79,7 @@ public class UserService {
 //        return userDto;
 //    }
 
-
+    //Get Users by Id Service
     public Users getUserById(Long id) {
         Users users = usersRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User Not Found With Id: " + id));
@@ -99,6 +99,7 @@ public class UserService {
 
     }
 
+    //Update User Service
     public Users updateUser(Users newUser) {
 
         Users existingUser = usersRepository.findById(newUser.getUserId())
@@ -146,6 +147,7 @@ public class UserService {
 //        return usersRepository.save(user);
     }
 
+    //Get All Users Service
     public List<Users> getAllUsers() {
         return usersRepository.findAll();
     }

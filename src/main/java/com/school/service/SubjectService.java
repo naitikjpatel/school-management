@@ -44,11 +44,12 @@ public class SubjectService {
         return null;
     }
 
+    //Get the All The Subject By CourseId Service
     public List<Subject> getSubjectByCourseId(Long courseId) {
         return subjectRepository.findByCourseCourseId(courseId);
     }
 
-    //Add Subject
+    //Add Subject Service
     public Subject addSubject(Subject subject, Long courseId) {
         Course course = courseService.getCourseById(courseId);
         //getting infinite : solution
@@ -60,7 +61,7 @@ public class SubjectService {
         return subject;
     }
 
-    //Update Subject By Id
+    //Update Subject By Id Service
     public Subject updateSubject(Subject updatedSubject) {
         Subject existingSubject = subjectRepository.findById(updatedSubject.getSubjectId()).orElseThrow(() -> new ResourceNotFoundException("Subject not found with ID: " + updatedSubject.getSubjectId()));
 

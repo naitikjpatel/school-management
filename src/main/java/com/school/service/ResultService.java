@@ -33,15 +33,18 @@ public class ResultService {
         return result;
     }
 
+    //Get Result BY Id Service
     public Result getResultById(Long id) {
         return resultRepository.findById(id).orElse(null);
 
     }
 
+    //Get All Result Service
     public List<Result> getAllResult() {
         return resultRepository.findAll();
     }
 
+    //Update Result Service
     public Result updateResult(Result updatedResult) {
         Result existingResult = resultRepository.findById(updatedResult.getResultId())
                 .orElseThrow(() -> new ResourceNotFoundException("Result not found with ID: " + updatedResult.getResultId()));
