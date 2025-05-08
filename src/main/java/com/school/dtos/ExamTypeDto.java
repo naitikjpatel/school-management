@@ -16,5 +16,5 @@ import java.util.List;
 public class ExamTypeDto {
     Long examTypeId;
     String examTypeName;
-    List<Exam> exams;
+    List<ExamDtoForExamType> exams;
 }

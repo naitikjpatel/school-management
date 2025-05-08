@@ -1,8 +1,6 @@
 package com.school.mapper;
 
 import com.school.dtos.ExamDto;
-import com.school.dtos.ExamTypeDtoForExam;
-import com.school.dtos.SubjectDtoForCourse;
 import com.school.entity.Exam;
 import org.springframework.beans.BeanUtils;
 

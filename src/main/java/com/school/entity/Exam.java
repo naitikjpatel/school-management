@@ -26,4 +26,8 @@ public class Exam {
     @ManyToOne
     @JoinColumn(name = "subjects_id")
     Subject subjects;
+
+    @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL)
+    List<Result> results = new ArrayList<>();
+
 }
