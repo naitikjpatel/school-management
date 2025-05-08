@@ -1,7 +1,6 @@
 package com.school.service;
 
 import com.school.Exception.ResourceNotFoundException;
-import com.school.entity.ExamType;
 import com.school.entity.UserType;
 import com.school.repository.UserTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +22,6 @@ public class UserTypeService {
     //Update UserType Service
     public UserType updateUserType(UserType userType) {
 
-
         UserType existingUserType = userTypeRepository.findById(userType.getUserTypeId())
                 .orElseThrow(() -> new ResourceNotFoundException("UserType not found with id: " + userType.getUserTypeId()));
         if (userType.getUserTypes() != null) {
@@ -31,7 +29,6 @@ public class UserTypeService {
             return userTypeRepository.save(existingUserType);
 
         }
-
         return null;
     }
 
@@ -40,13 +37,13 @@ public class UserTypeService {
         return userTypeRepository.findAll();
     }
 
-    //Get UserType By Id Service
+    //Get UserType By I'd Service
     public UserType getUserTypeById(Long id) {
-        UserType userType = userTypeRepository.findById(id).orElse(null);
-        return userType;
+        return userTypeRepository.findById(id).orElse(null);
+
     }
 
-    //Delete UserType By Id Service
+    //Delete UserType By I'd Service
     public UserType deleteUserTypeById(Long id) {
         UserType userType = userTypeRepository.findById(id).orElse(null);
         if (userType != null) {

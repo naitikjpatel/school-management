@@ -44,7 +44,7 @@ public class CourseController {
 
     }
 
-    //Get Course By Course Id]
+    //Get Course By Course I'd
     @GetMapping(ApiConstants.COURSE_BY_ID)
     public ResponseEntity<CourseDto> getCourseById(@PathVariable Long courseId) {
         Course course = courseService.getCourseById(courseId);
@@ -54,7 +54,7 @@ public class CourseController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    //Course Delete By Id
+    //Course Delete By I'd
     @DeleteMapping(ApiConstants.DELETE_COURSE_BY_ID)
     public ResponseEntity<String> deleteCourse(@PathVariable Long courseId) {
         Course course = courseService.deleteCourseById(courseId);

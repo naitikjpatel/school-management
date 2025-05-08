@@ -6,15 +6,12 @@ import com.school.entity.Subject;
 import com.school.repository.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class CourseService {
-
-//    addCourse, getCourses, updateCourse, deleteCourse.
-
+    
     @Autowired
     private CourseRepository courseRepository;
 
@@ -26,7 +23,7 @@ public class CourseService {
         return courseRepository.findAll();
     }
 
-    //Get Course By Id Service
+    //Get Course By I'd Service
     public Course getCourseById(Long id) {
         Course course = courseRepository.findById(id).orElse(null);
         if (course != null) {
@@ -42,7 +39,8 @@ public class CourseService {
         return courseRepository.save(course);
     }
 
-    //Delete Course By Id service
+
+    //Delete Course By I'd service
     public Course deleteCourseById(Long id) {
         Optional<Course> course = courseRepository.findById(id);
         if (course.isPresent()) {
@@ -52,20 +50,17 @@ public class CourseService {
         return null;
     }
 
-    //Update Course By Id Service
+    //Update Course By I'd Service
     public Course updateCourse(Course course) {
         Course existingCourse = courseRepository.findById(course.getCourseId())
                 .orElseThrow(() -> new ResourceNotFoundException("Course not found with ID: " + course.getCourseId()));
-
         // Only update if value is not null
         if (course.getCourseName() != null) {
             existingCourse.setCourseName(course.getCourseName());
         }
-
         if (course.getCourseDescription() != null) {
             existingCourse.setCourseDescription(course.getCourseDescription());
         }
-
         return courseRepository.save(existingCourse);
     }
 

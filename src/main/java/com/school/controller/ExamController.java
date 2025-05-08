@@ -23,7 +23,6 @@ public class ExamController {
     @GetMapping(ApiConstants.EXAM_BY_ID)
     public ResponseEntity<?> getExamById(@PathVariable("examId") Long examId) {
         Exam exam = examService.getExamById(examId);
-
         return new ResponseEntity<>(ExamMapper.toDto(exam), HttpStatus.OK);
     }
 
@@ -34,7 +33,6 @@ public class ExamController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         List<ExamDto> examDtoList = exams.stream().map(ExamMapper::toDto).collect(Collectors.toList());
-
         return new ResponseEntity<>(examDtoList, HttpStatus.OK);
     }
 

@@ -7,9 +7,8 @@ import com.school.repository.CourseRepository;
 import com.school.repository.SubjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 public class SubjectService {
@@ -21,20 +20,18 @@ public class SubjectService {
     @Autowired
     private CourseRepository courseRepository;
 
-//    addSubject, getSubjects, getSubjectsByCourseId,deleteSubjectById ,updateSubjectById
-
     //Get All Subject
     public List<Subject> getAllSubject() {
         return subjectRepository.findAll();
     }
 
-    //Get Subject By Id
+    //Get Subject By I'd
     public Subject getSubjectById(Long id) {
-        Subject subject = subjectRepository.findById(id).orElse(null);
-        return subject;
+        return subjectRepository.findById(id).orElse(null);
+
     }
 
-    //Delete Subject By Id
+    //Delete Subject By I'd
     public Subject deleteSubjectById(Long id) {
         Subject subject = subjectRepository.findById(id).orElse(null);
         if (subject != null) {
@@ -61,7 +58,7 @@ public class SubjectService {
         return subject;
     }
 
-    //Update Subject By Id Service
+    //Update Subject By I'd Service
     public Subject updateSubject(Subject updatedSubject) {
         Subject existingSubject = subjectRepository.findById(updatedSubject.getSubjectId()).orElseThrow(() -> new ResourceNotFoundException("Subject not found with ID: " + updatedSubject.getSubjectId()));
 

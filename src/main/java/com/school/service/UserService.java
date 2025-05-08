@@ -1,20 +1,13 @@
 package com.school.service;
 
 import com.school.Exception.ResourceNotFoundException;
-import com.school.dtos.CourseDto;
-import com.school.dtos.SubjectDto;
-import com.school.dtos.UsersDto;
-import com.school.entity.Subject;
+
 import com.school.entity.UserDetails;
 import com.school.entity.UserType;
 import com.school.entity.Users;
-import com.school.mapper.CourseMapper;
-import com.school.mapper.SubjectMapper;
 import com.school.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,7 +16,6 @@ public class UserService {
 
     @Autowired
     private UsersRepository usersRepository;
-
     @Autowired
     private UserDetailsRepository userDetailsRepository;
     @Autowired
@@ -44,51 +36,19 @@ public class UserService {
         } else {
             throw new ResourceNotFoundException("UserType is not provided or not found");
         }
-
-
         user.setUserDetails(userDetails);
-
         return usersRepository.save(user);
     }
-
-    //Get User By Id Service
-//    public UsersDto getUserById(Long id) {
-//        Users users = usersRepository.findById(id)
-//                .orElseThrow(() -> new ResourceNotFoundException("User Not Found With Id: " + id));
-//
-//        UsersDto userDto = new UsersDto();
-//        userDto.setUserId(users.getUserId());
-//        userDto.setFirstName(users.getFirstName());
-//
-//        List<CourseDto> courseDtos = users.getCourses().stream().map(course -> {
-//            CourseDto courseDto = new CourseDto();
-//            courseDto.setCourseId(course.getCourseId());
-//
-//            List<SubjectDto> subjectDtos = course.getSubjects().stream().map(subject -> {
-//                SubjectDto subjectDto = new SubjectDto();
-//                subjectDto.setSubjectId(subject.getSubjectId());
-//                subjectDto.setSubjectName(subject.getSubjectName());
-//                return subjectDto;
-//            }).toList();
-//
-//            courseDto.setSubjects(subjectDtos);
-//            return courseDto;
-//        }).toList();
-//
-//        userDto.setCourses(courseDtos);
-//        return userDto;
-//    }
-
-    //Get Users by Id Service
+    
+    //Get Users by I'd Service
     public Users getUserById(Long id) {
         Users users = usersRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User Not Found With Id: " + id));
         return users;
 
     }
-
-
-    //Delete User By Id Service
+    
+    //Delete User By I'd Service
     public Users deleteUserById(Long id) {
         Optional<Users> usersOptional = usersRepository.findById(id);
         if (usersOptional.isPresent()) {
@@ -139,12 +99,7 @@ public class UserService {
         if (newUser.getUserType() != null) {
             existingUser.setUserType(newUser.getUserType());
         }
-
-        // Save the updated user entity
         return usersRepository.save(existingUser);
-
-
-//        return usersRepository.save(user);
     }
 
     //Get All Users Service

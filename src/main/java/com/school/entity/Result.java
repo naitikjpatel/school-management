@@ -18,8 +18,7 @@ public class Result {
     Long resultId;
 
     // Pass/Fail status
-    String status; // "Pass" or "Fail"
-
+    String status;
     // Date of result or evaluation
     Date resultDate;
 

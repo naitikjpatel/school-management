@@ -18,9 +18,7 @@ public class ExamType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long examTypeId;
     String examTypeName;
-
     @OneToMany(mappedBy = "examType", cascade = CascadeType.ALL)
-
     List<Exam> exams=new ArrayList<>() ;
 
 

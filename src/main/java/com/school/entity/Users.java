@@ -1,6 +1,5 @@
 package com.school.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -21,12 +20,12 @@ public class Users {
     String lastName;
     String email;
 
-    //one to one relation with the userdetails entity
+    //one-to-one relation with the user details entity
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_detail_id")
     UserDetails userDetails;
 
-    //many to one realtion with usertype entity
+    //many-to-one relation with usertype entity
     @ManyToOne
     @JoinColumn(name = "user_type_id")
     UserType userType;
@@ -34,8 +33,7 @@ public class Users {
     @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
     List<Result> results = new ArrayList<>();
 
-    //many to many relationship with the course entity
-
+    //many-to-many relationship with the course entity
     @ManyToMany
     @JoinTable(
             name = "user_courses",

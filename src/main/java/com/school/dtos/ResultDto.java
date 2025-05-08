@@ -1,8 +1,5 @@
 package com.school.dtos;
 
-import com.school.entity.Exam;
-import com.school.entity.Users;
-import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 

@@ -1,12 +1,8 @@
 package com.school.dtos;
 
-import com.school.entity.Exam;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.OneToMany;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter

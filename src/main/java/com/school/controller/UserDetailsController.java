@@ -48,7 +48,7 @@ public class UserDetailsController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-
+// Optional
 //    @DeleteMapping("deleteUserDetails")
 //    public ResponseEntity<String> deleteUserDetails(@RequestBody UserDetails userDetails) {
 //        userDetails=userDetailsService.deleteUserDetails(userDetails);

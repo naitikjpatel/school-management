@@ -20,7 +20,7 @@ public class CourseMapper {
         BeanUtils.copyProperties(course, courseDto);
 
         List<SubjectDtoForCourse> subjectDtos = course.getSubjects().stream()
-                .map(SubjectDtoForCourseMapper::toDto)  // You write this method
+                .map(SubjectDtoForCourseMapper::toDto)
                 .collect(Collectors.toList());
 
         courseDto.setSubjects(subjectDtos);

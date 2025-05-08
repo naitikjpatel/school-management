@@ -1,7 +1,6 @@
 package com.school.mapper;
 
 import com.school.dtos.ResultDto;
-import com.school.dtos.UsersDtoForResult;
 import com.school.entity.Result;
 import org.springframework.beans.BeanUtils;
 

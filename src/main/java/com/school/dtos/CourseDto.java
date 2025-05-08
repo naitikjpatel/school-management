@@ -1,6 +1,6 @@
 package com.school.dtos;
 
-import com.school.entity.Subject;
+
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 

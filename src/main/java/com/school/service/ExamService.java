@@ -4,7 +4,6 @@ import com.school.Exception.ResourceNotFoundException;
 import com.school.entity.Exam;
 import com.school.entity.ExamType;
 import com.school.entity.Subject;
-import com.school.mapper.ExamMapper;
 import com.school.repository.ExamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,16 +22,14 @@ public class ExamService {
 
     //Add Exam Service
     public Exam addExam(Exam exam) {
-        Long examTypeId = exam.getExamType().getExamTypeId(); // ensure it's sent in request
+        Long examTypeId = exam.getExamType().getExamTypeId();
         ExamType examType = examTypeService.getExamTypeById(examTypeId);
         //examType Find
         exam.setExamType(examType);
         //subject find
         Subject subject = subjectService.getSubjectById(exam.getSubjects().getSubjectId());
-
         exam.setSubjects(subject);
-
-        return examRepository.save(exam); // save only Exam, not ExamType
+        return examRepository.save(exam);
     }
 
     //Delete Exam Service
@@ -43,11 +40,6 @@ public class ExamService {
 
     //Get Exam By id
     public Exam getExamById(Long examId) {
-//        Exam exam=examRepository.findById(examId).get();
-//        if (exam!=null){
-//            return exam;
-//        }
-//        return null;
         return examRepository.findById(examId).orElseThrow(() -> new ResourceNotFoundException("Exam is not found with id" + examId));
 
     }

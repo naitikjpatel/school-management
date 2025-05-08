@@ -1,16 +1,8 @@
 package com.school.dtos;
 
-import com.school.entity.ExamType;
-import com.school.entity.Subject;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Getter
 @Setter
@@ -33,5 +25,5 @@ public class ExamDto {
     }
 }
 
-//in case if infinte problem occure then in examDto make a SubjectDto and ExamTypeDto.
-//make a subjectdto and in that if there is dependent on the exam entity then remove it : if we not removing we getting the infinite response. so remove that dependancy
+//in case if infinite problem occur then in examDto make a SubjectDto and ExamTypeDto.
+//make a subjectdto and in that if there is dependent on the exam entity then remove it : if we're not removing we're getting the infinite response. so remove that dependency

@@ -33,21 +33,17 @@ public class ExamTypeService {
             return examTypeOpt.get();
         }
         return null;
-
     }
 
     //Add ExamType Service
     public ExamType addExamType(ExamType examType) {
         String typeName = examType.getExamTypeName();
-
         // Check if ExamType already exists
         Optional<ExamType> existingTypeOpt = examTypeRepository.findByExamTypeName(typeName);
-
         if (existingTypeOpt.isPresent()) {
             return existingTypeOpt.get();
         }
         return examTypeRepository.save(examType);
-
     }
 
 

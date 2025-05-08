@@ -35,19 +35,19 @@ public class UsersMapper {
         usersDto.setLastName(users.getLastName());
         usersDto.setEmail(users.getEmail());
 
-        // Manually map UserType and UserDetails (they're simple enough)
-        usersDto.setUserType(users.getUserType());        // Optional: make a DTO if needed
-        usersDto.setUserDetails(users.getUserDetails());  // Optional: make a DTO if needed
+        //  map UserType and UserDetails
+        usersDto.setUserType(users.getUserType());
+        usersDto.setUserDetails(users.getUserDetails());
 
         // Copy results if needed, or ignore if unnecessary in response
-        //here we getting the list of result so we neeed to convert that all the result enitity to dto
+        //here we're getting the list of result so we need to convert that all the result entity to dto
         List<ResultDtoForUsers> usersDtos = users.getResults().stream()
                 .map(ResultDtoForUsersMapper::toDto)
                 .collect(Collectors.toList());
 
 
         usersDto.setResults(usersDtos);
-        // Map nested courses → courseDto
+        // Map nested courses -> courseDto
         List<CourseDto> courseDtos = users.getCourses().stream()
                 .map(CourseMapper::toDto)
                 .collect(Collectors.toList());

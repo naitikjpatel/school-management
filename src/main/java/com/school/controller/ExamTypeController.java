@@ -5,13 +5,10 @@ import com.school.dtos.ExamTypeDto;
 import com.school.entity.ExamType;
 import com.school.mapper.ExamTypeMapper;
 import com.school.service.ExamTypeService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,7 +34,7 @@ public class ExamTypeController {
     public ResponseEntity<List<ExamTypeDto>> getAllExamType() {
         List<ExamType> examTypeList = examTypeService.getAllExamTypes();
 
-        if (examTypeList.size() > 0) {
+        if (!examTypeList.isEmpty()) {
             List<ExamTypeDto> examTypeDtoList = examTypeList.stream()
                     .map(ExamTypeMapper::toDto)
                     .collect(Collectors.toList());

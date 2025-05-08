@@ -1,9 +1,5 @@
 package com.school.dtos;
 
-import com.school.entity.Course;
-import com.school.entity.Exam;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 

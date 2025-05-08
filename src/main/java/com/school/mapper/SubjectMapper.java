@@ -1,12 +1,9 @@
 package com.school.mapper;
 
-import com.school.dtos.CourseDtoForSubject;
 import com.school.dtos.ExamDto;
 import com.school.dtos.SubjectDto;
-import com.school.dtos.SubjectDtoForCourse;
 import com.school.entity.Subject;
 import org.springframework.beans.BeanUtils;
-
 import java.util.List;
 import java.util.stream.Collectors;
 

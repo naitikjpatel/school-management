@@ -5,8 +5,6 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
-import java.util.List;
-
 @Entity
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)

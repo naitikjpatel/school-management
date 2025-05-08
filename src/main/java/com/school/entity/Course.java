@@ -5,9 +5,6 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
-import org.hibernate.annotations.Fetch;
-import org.springframework.data.repository.cdi.Eager;
-
 import java.util.ArrayList;
 import java.util.List;
 

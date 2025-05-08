@@ -33,7 +33,7 @@ public class ResultService {
         return result;
     }
 
-    //Get Result BY Id Service
+    //Get Result BY I'd Service
     public Result getResultById(Long id) {
         return resultRepository.findById(id).orElse(null);
 
@@ -57,12 +57,10 @@ public class ResultService {
             Users user = userService.getUserById(updatedResult.getUsers().getUserId());
             existingResult.setUsers(user);
         }
-
         if (updatedResult.getExam() != null) {
             Exam exam = examService.getExamById(updatedResult.getExam().getExamId());
             existingResult.setExam(exam);
         }
-
         return resultRepository.save(existingResult);
     }
 

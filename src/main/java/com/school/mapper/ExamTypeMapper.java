@@ -1,12 +1,10 @@
 package com.school.mapper;
 
-import com.school.dtos.ExamDto;
 import com.school.dtos.ExamDtoForExamType;
 import com.school.dtos.ExamTypeDto;
 import com.school.entity.Exam;
 import com.school.entity.ExamType;
 import org.springframework.beans.BeanUtils;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
