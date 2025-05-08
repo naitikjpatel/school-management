@@ -1,5 +1,6 @@
 package com.school.controller;
 
+import com.school.constants.ApiConstants;
 import com.school.dtos.SubjectDto;
 import com.school.entity.Subject;
 import com.school.mapper.SubjectMapper;
@@ -13,14 +14,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/subject/")
+@RequestMapping(ApiConstants.SUBJECT)
 public class SubjectController {
 
     @Autowired
     private SubjectService subjectService;
 
     //Get All Subject
-    @GetMapping("getAllSubject")
+    @GetMapping(ApiConstants.GET_ALL_SUBJECTS)
     public ResponseEntity<List<SubjectDto>> getAllSubject() {
         List<Subject> subjects = subjectService.getAllSubject();
         if (!subjects.isEmpty()) {
@@ -33,7 +34,7 @@ public class SubjectController {
     }
 
     //Get Subject By SubjectId
-    @GetMapping("{subjectId}")
+    @GetMapping(ApiConstants.SUBJECT_BY_ID)
     public ResponseEntity<SubjectDto> getSubjectById(@PathVariable("subjectId") Long subjectId) {
         Subject subject = subjectService.getSubjectById(subjectId);
         if (subject != null) {
@@ -45,7 +46,7 @@ public class SubjectController {
     }
 
     //Add Subject
-    @PostMapping("addSubject")
+    @PostMapping(ApiConstants.ADD_SUBJECT)
     public ResponseEntity<SubjectDto> addSubject(@RequestBody SubjectDto subjectDto) {
         Subject subject = SubjectMapper.toEntity(subjectDto);
         subject = subjectService.addSubject(subject, subjectDto.getCourse().getCourseId());

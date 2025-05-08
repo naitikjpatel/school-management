@@ -1,5 +1,6 @@
 package com.school.controller;
 
+import com.school.constants.ApiConstants;
 import com.school.dtos.CourseDto;
 import com.school.entity.Course;
 import com.school.mapper.CourseMapper;
@@ -13,14 +14,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/course")
+@RequestMapping(ApiConstants.COURSE)
 public class CourseController {
 
     @Autowired
     private CourseService courseService;
 
     //Add Course Url
-    @PostMapping("addCourse")
+    @PostMapping(ApiConstants.ADD_COURSE)
     public ResponseEntity<CourseDto> addCourse(@RequestBody CourseDto courseDto) {
         //converting into the Course Object
         Course course = CourseMapper.toEntity(courseDto);
@@ -29,7 +30,7 @@ public class CourseController {
     }
 
     //Get All Course Url
-    @GetMapping("getAllCourse")
+    @GetMapping(ApiConstants.GET_ALL_COURSES)
     public ResponseEntity<List<CourseDto>> getAllCourse() {
         List<Course> courses = courseService.getAllCourse();
         if (!courses.isEmpty()) {
@@ -44,7 +45,7 @@ public class CourseController {
     }
 
     //Get Course By Course Id]
-    @GetMapping("{courseId}")
+    @GetMapping(ApiConstants.COURSE_BY_ID)
     public ResponseEntity<CourseDto> getCourseById(@PathVariable Long courseId) {
         Course course = courseService.getCourseById(courseId);
         if (course != null) {
@@ -54,7 +55,7 @@ public class CourseController {
     }
 
     //Course Delete By Id
-    @DeleteMapping("{courseId}")
+    @DeleteMapping(ApiConstants.DELETE_COURSE_BY_ID)
     public ResponseEntity<String> deleteCourse(@PathVariable Long courseId) {
         Course course = courseService.deleteCourseById(courseId);
         if (course != null) {
@@ -66,7 +67,7 @@ public class CourseController {
     }
 
     //Update Course By The CourseId
-    @PutMapping("updateCourse")
+    @PutMapping(ApiConstants.UPDATE_COURSE)
     public ResponseEntity<CourseDto> updateCourse(@RequestBody CourseDto courseDto) {
         Course course = CourseMapper.toEntity(courseDto);
         course = courseService.updateCourse(course);

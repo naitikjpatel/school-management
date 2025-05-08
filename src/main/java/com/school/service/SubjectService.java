@@ -62,8 +62,7 @@ public class SubjectService {
 
     //Update Subject By Id
     public Subject updateSubject(Subject updatedSubject) {
-        Subject existingSubject = subjectRepository.findById(updatedSubject.getSubjectId())
-                .orElseThrow(() -> new ResourceNotFoundException("Subject not found with ID: " + updatedSubject.getSubjectId()));
+        Subject existingSubject = subjectRepository.findById(updatedSubject.getSubjectId()).orElseThrow(() -> new ResourceNotFoundException("Subject not found with ID: " + updatedSubject.getSubjectId()));
 
         // Only update fields if not null
         if (updatedSubject.getSubjectName() != null) {
@@ -72,8 +71,7 @@ public class SubjectService {
 
         // Optional: if you want to allow course change
         if (updatedSubject.getCourse() != null && updatedSubject.getCourse().getCourseId() != null) {
-            Course newCourse = courseRepository.findById(updatedSubject.getCourse().getCourseId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Course not found with ID: " + updatedSubject.getCourse().getCourseId()));
+            Course newCourse = courseRepository.findById(updatedSubject.getCourse().getCourseId()).orElseThrow(() -> new ResourceNotFoundException("Course not found with ID: " + updatedSubject.getCourse().getCourseId()));
             existingSubject.setCourse(newCourse);
         }
 

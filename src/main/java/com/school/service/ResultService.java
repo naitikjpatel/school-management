@@ -34,8 +34,8 @@ public class ResultService {
     }
 
     public Result getResultById(Long id) {
-        Result result = resultRepository.findById(id).orElse(null);
-        return result;
+        return resultRepository.findById(id).orElse(null);
+
     }
 
     public List<Result> getAllResult() {
@@ -63,5 +63,14 @@ public class ResultService {
         return resultRepository.save(existingResult);
     }
 
+
+    public Result deleteResultById(Long id) {
+        Result existingResult = resultRepository.findById(id).orElse(null);
+        if (existingResult != null) {
+            resultRepository.delete(existingResult);
+            return existingResult;
+        }
+        return null;
+    }
 
 }

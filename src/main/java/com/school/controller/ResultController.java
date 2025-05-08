@@ -1,5 +1,6 @@
 package com.school.controller;
 
+import com.school.constants.ApiConstants;
 import com.school.dtos.ResultDto;
 import com.school.entity.Result;
 import com.school.mapper.ResultMapper;
@@ -13,13 +14,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/result/")
+@RequestMapping(ApiConstants.RESULT)
 public class ResultController {
 
     @Autowired
     private ResultService resultService;
 
-    @GetMapping("{resultId}")
+    @GetMapping(ApiConstants.RESULT_BY_ID)
     public ResponseEntity<?> getResult(@PathVariable("resultId") Long resultId) {
         Result result = resultService.getResultById(resultId);
         if (result == null) {
@@ -29,7 +30,7 @@ public class ResultController {
     }
 
 
-    @GetMapping("getAllResult")
+    @GetMapping(ApiConstants.GET_ALL_RESULTS)
     public ResponseEntity<?> getAllResult() {
         List<Result> results = resultService.getAllResult();
         if (results == null) {
@@ -40,7 +41,7 @@ public class ResultController {
     }
 
 
-    @PostMapping("addResult")
+    @PostMapping(ApiConstants.ADD_RESULT)
     public ResponseEntity<?> addResult(@RequestBody ResultDto resultDto) {
         System.out.println(resultDto.getUsers().getUserId());
         Result result = ResultMapper.toEntity(resultDto);
@@ -49,5 +50,14 @@ public class ResultController {
 
         result = resultService.addResult(result);
         return new ResponseEntity<>(ResultMapper.toDto(result), HttpStatus.OK);
+    }
+    @DeleteMapping(ApiConstants.DELETE_RESULT_BY_ID)
+    public ResponseEntity<?> deleteResultById(@PathVariable("resultId") Long resultId) {
+        Result result = resultService.deleteResultById(resultId);
+        if (result == null) {
+            return new ResponseEntity<>("Result is not found with id :" + resultId, HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>("Result is delete with id :" + resultId, HttpStatus.OK);
+
     }
 }

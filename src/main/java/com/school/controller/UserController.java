@@ -1,5 +1,6 @@
 package com.school.controller;
 
+import com.school.constants.ApiConstants;
 import com.school.dtos.UsersDto;
 import com.school.entity.Users;
 import com.school.mapper.UsersMapper;
@@ -13,13 +14,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/users/")
+@RequestMapping(ApiConstants.USERS)
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @PostMapping("/addUser")
+    @PostMapping(ApiConstants.ADD_USER)
     public ResponseEntity<UsersDto> addUser(@RequestBody UsersDto userDto) {
         Users user = UsersMapper.toEntity(userDto);
         Users createdUser = userService.addUser(user);
@@ -31,7 +32,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/getAllUser")
+    @GetMapping(ApiConstants.GET_ALL_USERS)
     public ResponseEntity<List<UsersDto>> getAllUser() {
         List<Users> allUsers = userService.getAllUsers();
 
@@ -43,7 +44,7 @@ public class UserController {
         }
     }
 
-    @DeleteMapping("{userId}")
+    @DeleteMapping(ApiConstants.DELETE_USER_BY_ID)
     public ResponseEntity<?> deleteUser(@PathVariable Long userId) {
         Users deletedUser = userService.deleteUserById(userId);
 
@@ -57,7 +58,7 @@ public class UserController {
     }
 
 
-    @PutMapping("updateUser")
+    @PutMapping(ApiConstants.UPDATE_USER)
     public ResponseEntity<UsersDto> updateUser(@RequestBody UsersDto userDto) {
         Users user = UsersMapper.toEntity(userDto);
         Users updatedUser = userService.updateUser(user);
@@ -69,7 +70,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    @GetMapping("{userId}")
+    @GetMapping(ApiConstants.USER_BY_ID)
     public ResponseEntity<UsersDto> getUserById(@PathVariable Long userId) {
         Users user = userService.getUserById(userId);
 

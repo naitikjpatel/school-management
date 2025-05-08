@@ -1,5 +1,6 @@
 package com.school.controller;
 
+import com.school.constants.ApiConstants;
 import com.school.dtos.UserTypeDto;
 import com.school.entity.UserType;
 import com.school.mapper.UserTypeMapper;
@@ -13,13 +14,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/userType/")
+@RequestMapping(ApiConstants.USER_TYPE)
 public class UserTypeController {
 
     @Autowired
     private UserTypeService userTypeService;
 
-    @PostMapping("addUserType")
+    @PostMapping(ApiConstants.ADD_USER_TYPE)
     public ResponseEntity<UserTypeDto> addUserType(@RequestBody UserTypeDto userTypeDto) {
         UserType userType = UserTypeMapper.toEntity(userTypeDto);
         UserType saved = userTypeService.addUserType(userType);
@@ -31,7 +32,7 @@ public class UserTypeController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    @PutMapping("updateUserType")
+    @PutMapping(ApiConstants.UPDATE_USER_TYPE)
     public ResponseEntity<UserTypeDto> updateUserType(@RequestBody UserTypeDto userTypeDto) {
         UserType userType = UserTypeMapper.toEntity(userTypeDto);
         UserType updated = userTypeService.updateUserType(userType);
@@ -43,7 +44,7 @@ public class UserTypeController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("getAllUserType")
+    @GetMapping(ApiConstants.GET_ALL_USER_TYPES)
     public ResponseEntity<List<UserTypeDto>> getAllUserTypes() {
         List<UserType> userTypes = userTypeService.getAllUserType();
 
@@ -58,7 +59,7 @@ public class UserTypeController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("{id}")
+    @GetMapping(ApiConstants.USER_TYPE_BY_ID)
     public ResponseEntity<UserTypeDto> getUserTypeById(@PathVariable Long id) {
         UserType userType = userTypeService.getUserTypeById(id);
 
@@ -69,7 +70,7 @@ public class UserTypeController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping(ApiConstants.DELETE_USER_TYPE_BY_ID)
     public ResponseEntity<UserTypeDto> deleteUserType(@PathVariable Long id) {
         UserType deleted = userTypeService.deleteUserTypeById(id);
 

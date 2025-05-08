@@ -1,5 +1,6 @@
 package com.school.controller;
 
+import com.school.constants.ApiConstants;
 import com.school.dtos.ExamTypeDto;
 import com.school.entity.ExamType;
 import com.school.mapper.ExamTypeMapper;
@@ -15,7 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/examType/")
+@RequestMapping(ApiConstants.EXAM_TYPE)
 public class ExamTypeController {
 
 
@@ -23,7 +24,7 @@ public class ExamTypeController {
     private ExamTypeService examTypeService;
 
     //Add New ExamType
-    @PostMapping("addExamType")
+    @PostMapping(ApiConstants.ADD_EXAM_TYPE)
     public ResponseEntity<ExamTypeDto> addExamType(@RequestBody ExamTypeDto examTypeDto) {
         ExamType examType = ExamTypeMapper.toEntity(examTypeDto);
 
@@ -32,7 +33,7 @@ public class ExamTypeController {
     }
 
     //Get All ExamType
-    @GetMapping("getAllExamType")
+    @GetMapping(ApiConstants.GET_ALL_EXAM_TYPES)
     public ResponseEntity<List<ExamTypeDto>> getAllExamType() {
         List<ExamType> examTypeList = examTypeService.getAllExamTypes();
 
@@ -47,7 +48,7 @@ public class ExamTypeController {
     }
 
     //Get ExamType with Id
-    @GetMapping("{examTypeId}")
+    @GetMapping(ApiConstants.EXAM_TYPE_BY_ID)
     public ResponseEntity<ExamTypeDto> getExamTypeById(@PathVariable("examTypeId") Long examTypeId) {
 
         ExamType examType = examTypeService.getExamTypeById(examTypeId);
@@ -57,7 +58,7 @@ public class ExamTypeController {
 
 
     //Delete ExamType with Id
-    @DeleteMapping("{examTypeId}")
+    @DeleteMapping(ApiConstants.DELETE_EXAM_TYPE_BY_ID)
     public ResponseEntity<String> deleteExamType(@PathVariable Long examTypeId) {
         ExamType deletedExamType = examTypeService.deleteExamTypeById(examTypeId);
 
@@ -73,7 +74,7 @@ public class ExamTypeController {
 
     //Updating the ExamType
 
-    @PutMapping("updateExamType")
+    @PutMapping(ApiConstants.UPDATE_EXAM_TYPE)
     public ResponseEntity<ExamTypeDto> updateExamType(@RequestBody ExamTypeDto dto) {
         ExamType updated = examTypeService.updateExamType(ExamTypeMapper.toEntity(dto));
         return ResponseEntity.ok(ExamTypeMapper.toDto(updated));

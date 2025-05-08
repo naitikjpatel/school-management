@@ -1,5 +1,6 @@
 package com.school.controller;
 
+import com.school.constants.ApiConstants;
 import com.school.dtos.ExamDto;
 import com.school.entity.Exam;
 import com.school.mapper.ExamMapper;
@@ -13,20 +14,20 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/exam/")
+@RequestMapping(ApiConstants.EXAM)
 public class ExamController {
 
     @Autowired
     private ExamService examService;
 
-    @GetMapping("{examId}")
+    @GetMapping(ApiConstants.EXAM_BY_ID)
     public ResponseEntity<?> getExamById(@PathVariable("examId") Long examId) {
         Exam exam = examService.getExamById(examId);
 
         return new ResponseEntity<>(ExamMapper.toDto(exam), HttpStatus.OK);
     }
 
-    @GetMapping("getAllExam")
+    @GetMapping(ApiConstants.GET_ALL_EXAMS)
     public ResponseEntity<List<ExamDto>> getAllExam() {
         List<Exam> exams = examService.getAllExam();
         if (exams == null) {
@@ -37,7 +38,7 @@ public class ExamController {
         return new ResponseEntity<>(examDtoList, HttpStatus.OK);
     }
 
-    @DeleteMapping("{examId}")
+    @DeleteMapping(ApiConstants.DELETE_EXAM_BY_ID)
     public ResponseEntity<?> deleteExam(@PathVariable("examId") Long examId) {
         Exam exam = examService.deleteExamById(examId);
         if (exam == null) {
@@ -47,7 +48,7 @@ public class ExamController {
         return new ResponseEntity<>("Exam Deleted with Id : " + examId, HttpStatus.OK);
     }
 
-    @PostMapping("addExam")
+    @PostMapping(ApiConstants.ADD_EXAM)
     public ResponseEntity<?> addExam(@RequestBody ExamDto examDto) {
         System.out.println(examDto.toString());
         Exam exam = ExamMapper.toEntity(examDto);

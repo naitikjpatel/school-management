@@ -1,5 +1,6 @@
 package com.school.controller;
 
+import com.school.constants.ApiConstants;
 import com.school.dtos.UserDetailsDto;
 import com.school.entity.UserDetails;
 import com.school.mapper.UserDetailsMapper;
@@ -13,13 +14,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/usersDetails/")
+@RequestMapping(ApiConstants.USER_DETAILS)
 public class UserDetailsController {
 
     @Autowired
     private UserDetailsService userDetailsService;
 
-    @PostMapping("addUserDetails")
+    @PostMapping(ApiConstants.ADD_USER_DETAILS)
     public ResponseEntity<UserDetailsDto> addUserDetails(@RequestBody UserDetailsDto userDetailsDto) {
         UserDetails userDetails = UserDetailsMapper.toEntity(userDetailsDto);
         //here converting Dto to Object
@@ -34,7 +35,7 @@ public class UserDetailsController {
 
     }
 
-    @PutMapping("updateUserDetails")
+    @PutMapping(ApiConstants.UPDATE_USER_DETAILS)
     public ResponseEntity<UserDetailsDto> updateUserDetails(@RequestBody UserDetailsDto userDetailsDto) {
         UserDetails userDetails = UserDetailsMapper.toEntity(userDetailsDto);
         userDetails = userDetailsService.updateUserDetails(userDetails);
@@ -58,7 +59,7 @@ public class UserDetailsController {
 //        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 //    }
 
-    @GetMapping("getAllUserDetails")
+    @GetMapping(ApiConstants.GET_ALL_USER_DETAILS)
     public ResponseEntity<List<UserDetailsDto>> getAllUserDetails() {
         List<UserDetails> userDetailsList = userDetailsService.getAllUserDetails();
 
