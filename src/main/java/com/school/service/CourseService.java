@@ -19,7 +19,7 @@ public class CourseService {
     private CourseRepository courseRepository;
 
     @Autowired
-    private  SubjectService subjectService;
+    private SubjectService subjectService;
 
     //Get All Courses Service
     public List<Course> getAllCourse() {
@@ -30,7 +30,7 @@ public class CourseService {
     public Course getCourseById(Long id) {
         Course course = courseRepository.findById(id).orElse(null);
         if (course != null) {
-            List<Subject> subjectList=subjectService.getSubjectByCourseId(id);
+            List<Subject> subjectList = subjectService.getSubjectByCourseId(id);
             course.setSubjects(subjectList);
         }
 

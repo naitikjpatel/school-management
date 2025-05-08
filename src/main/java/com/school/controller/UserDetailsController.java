@@ -23,16 +23,17 @@ public class UserDetailsController {
     public ResponseEntity<UserDetailsDto> addUserDetails(@RequestBody UserDetailsDto userDetailsDto) {
         UserDetails userDetails = UserDetailsMapper.toEntity(userDetailsDto);
         //here converting Dto to Object
-        userDetails=userDetailsService.addUserDetails(userDetails);
-        if(userDetails!=null) {
+        userDetails = userDetailsService.addUserDetails(userDetails);
+        if (userDetails != null) {
             //here converting Object to Dto
-            userDetailsDto=UserDetailsMapper.toDto(userDetails);
+            userDetailsDto = UserDetailsMapper.toDto(userDetails);
             return new ResponseEntity<>(userDetailsDto, HttpStatus.CREATED);
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
 
     }
+
     @PutMapping("updateUserDetails")
     public ResponseEntity<UserDetailsDto> updateUserDetails(@RequestBody UserDetailsDto userDetailsDto) {
         UserDetails userDetails = UserDetailsMapper.toEntity(userDetailsDto);

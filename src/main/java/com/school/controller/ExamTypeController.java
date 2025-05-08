@@ -71,12 +71,11 @@ public class ExamTypeController {
     }
 
 
-
     //Updating the ExamType
 
     @PutMapping("updateExamType")
     public ResponseEntity<ExamTypeDto> updateExamType(@RequestBody ExamTypeDto dto) {
-        ExamType updated = examTypeService.updateExamType( ExamTypeMapper.toEntity(dto));
+        ExamType updated = examTypeService.updateExamType(ExamTypeMapper.toEntity(dto));
         return ResponseEntity.ok(ExamTypeMapper.toDto(updated));
     }
 

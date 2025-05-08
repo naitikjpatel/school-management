@@ -23,16 +23,16 @@ public class CourseController {
     @PostMapping("addCourse")
     public ResponseEntity<CourseDto> addCourse(@RequestBody CourseDto courseDto) {
         //converting into the Course Object
-        Course course= CourseMapper.toEntity(courseDto);
-        course=courseService.addCourse(course);
+        Course course = CourseMapper.toEntity(courseDto);
+        course = courseService.addCourse(course);
         return new ResponseEntity<>(CourseMapper.toDto(course), HttpStatus.CREATED);
     }
 
     //Get All Course Url
     @GetMapping("getAllCourse")
     public ResponseEntity<List<CourseDto>> getAllCourse() {
-        List<Course> courses=courseService.getAllCourse();
-        if(!courses.isEmpty()) {
+        List<Course> courses = courseService.getAllCourse();
+        if (!courses.isEmpty()) {
             List<CourseDto> courseDtoList = courses.stream()
                     .map(CourseMapper::toDto)
                     .collect(Collectors.toList());
@@ -46,8 +46,8 @@ public class CourseController {
     //Get Course By Course Id]
     @GetMapping("{courseId}")
     public ResponseEntity<CourseDto> getCourseById(@PathVariable Long courseId) {
-        Course course=courseService.getCourseById(courseId);
-        if (course!=null) {
+        Course course = courseService.getCourseById(courseId);
+        if (course != null) {
             return new ResponseEntity<>(CourseMapper.toDto(course), HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -56,20 +56,20 @@ public class CourseController {
     //Course Delete By Id
     @DeleteMapping("{courseId}")
     public ResponseEntity<String> deleteCourse(@PathVariable Long courseId) {
-        Course course=courseService.deleteCourseById(courseId);
-        if (course!=null) {
+        Course course = courseService.deleteCourseById(courseId);
+        if (course != null) {
             String message = "Course with id : " + courseId + " has been deleted";
             return new ResponseEntity<>(message, HttpStatus.OK);
         }
-        return new ResponseEntity<>("Course with id : "+courseId+" is not found",HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("Course with id : " + courseId + " is not found", HttpStatus.NOT_FOUND);
 
     }
 
     //Update Course By The CourseId
     @PutMapping("updateCourse")
     public ResponseEntity<CourseDto> updateCourse(@RequestBody CourseDto courseDto) {
-        Course course=CourseMapper.toEntity(courseDto);
-        course=courseService.updateCourse(course);
+        Course course = CourseMapper.toEntity(courseDto);
+        course = courseService.updateCourse(course);
         return new ResponseEntity<>(CourseMapper.toDto(course), HttpStatus.OK);
     }
 

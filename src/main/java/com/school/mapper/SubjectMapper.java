@@ -17,12 +17,13 @@ public class SubjectMapper {
         BeanUtils.copyProperties(subjectDto, subject);
         return subject;
     }
+
     public static SubjectDto toDto(Subject subject) {
         SubjectDto subjectDto = new SubjectDto();
         BeanUtils.copyProperties(subject, subjectDto);
         subjectDto.setCourse(CourseDtoForSubjectMapper.toDto(subject.getCourse()));
 
-        List<ExamDto> examDtoList=subject.getExam().stream()
+        List<ExamDto> examDtoList = subject.getExam().stream()
                 .map(ExamMapper::toDto)
                 .collect(Collectors.toList());
 
@@ -38,7 +39,6 @@ public class SubjectMapper {
 //        }
         return subjectDto;
     }
-
 
 
 }

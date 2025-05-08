@@ -47,8 +47,9 @@ public class SubjectService {
     public List<Subject> getSubjectByCourseId(Long courseId) {
         return subjectRepository.findByCourseCourseId(courseId);
     }
+
     //Add Subject
-    public Subject addSubject(Subject subject,Long courseId) {
+    public Subject addSubject(Subject subject, Long courseId) {
         Course course = courseService.getCourseById(courseId);
         //getting infinite : solution
         course.setSubjects(null);

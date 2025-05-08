@@ -83,9 +83,9 @@ public class UserService {
     public Users getUserById(Long id) {
         Users users = usersRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User Not Found With Id: " + id));
-            return users;
+        return users;
 
-         }
+    }
 
 
     //Delete User By Id Service
@@ -95,52 +95,52 @@ public class UserService {
             usersRepository.delete(usersOptional.get());
             return usersOptional.get();
         }
-        return  null;
+        return null;
 
     }
 
     public Users updateUser(Users newUser) {
 
-             Users existingUser = usersRepository.findById(newUser.getUserId())
-                    .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + newUser.getUserId()));
+        Users existingUser = usersRepository.findById(newUser.getUserId())
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + newUser.getUserId()));
 
-            // Update fields
-            if (newUser.getFirstName() != null) {
-                existingUser.setFirstName(newUser.getFirstName());
+        // Update fields
+        if (newUser.getFirstName() != null) {
+            existingUser.setFirstName(newUser.getFirstName());
+        }
+        if (newUser.getLastName() != null) {
+            existingUser.setLastName(newUser.getLastName());
+        }
+        if (newUser.getEmail() != null) {
+            existingUser.setEmail(newUser.getEmail());
+        }
+
+        // Update UserDetails if provided
+        if (newUser.getUserDetails() != null) {
+            UserDetails existingUserDetails = existingUser.getUserDetails();
+            UserDetails newUserDetails = newUser.getUserDetails();
+
+            if (newUserDetails.getDetails() != null) {
+                existingUserDetails.setDetails(newUserDetails.getDetails());
             }
-            if (newUser.getLastName() != null) {
-                existingUser.setLastName(newUser.getLastName());
+            if (newUserDetails.getAddress() != null) {
+                existingUserDetails.setAddress(newUserDetails.getAddress());
             }
-            if (newUser.getEmail() != null) {
-                existingUser.setEmail(newUser.getEmail());
-            }
-
-            // Update UserDetails if provided
-            if (newUser.getUserDetails() != null) {
-                UserDetails existingUserDetails = existingUser.getUserDetails();
-                UserDetails newUserDetails = newUser.getUserDetails();
-
-                if (newUserDetails.getDetails() != null) {
-                    existingUserDetails.setDetails(newUserDetails.getDetails());
-                }
-                if (newUserDetails.getAddress() != null) {
-                    existingUserDetails.setAddress(newUserDetails.getAddress());
-                }
-                if (newUserDetails.getPhone() != null) {
-                    existingUserDetails.setPhone(newUserDetails.getPhone());
-                }
-
-                // Save updated UserDetails
-                userDetailsRepository.save(existingUserDetails);
+            if (newUserDetails.getPhone() != null) {
+                existingUserDetails.setPhone(newUserDetails.getPhone());
             }
 
-            // Update UserType if provided
-            if (newUser.getUserType() != null) {
-                existingUser.setUserType(newUser.getUserType());
-            }
+            // Save updated UserDetails
+            userDetailsRepository.save(existingUserDetails);
+        }
 
-            // Save the updated user entity
-            return usersRepository.save(existingUser);
+        // Update UserType if provided
+        if (newUser.getUserType() != null) {
+            existingUser.setUserType(newUser.getUserType());
+        }
+
+        // Save the updated user entity
+        return usersRepository.save(existingUser);
 
 
 //        return usersRepository.save(user);

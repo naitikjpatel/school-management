@@ -32,7 +32,7 @@ public class ExamController {
         if (exams == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        List<ExamDto>examDtoList=exams.stream().map(ExamMapper::toDto).collect(Collectors.toList());
+        List<ExamDto> examDtoList = exams.stream().map(ExamMapper::toDto).collect(Collectors.toList());
 
         return new ResponseEntity<>(examDtoList, HttpStatus.OK);
     }
@@ -44,14 +44,14 @@ public class ExamController {
             return new ResponseEntity<>("Exam not found with id " + examId, HttpStatus.NOT_FOUND);
         }
         examService.deleteExamById(examId);
-        return new ResponseEntity<>("Exam Deleted with Id : "+examId,HttpStatus.OK);
+        return new ResponseEntity<>("Exam Deleted with Id : " + examId, HttpStatus.OK);
     }
 
     @PostMapping("addExam")
     public ResponseEntity<?> addExam(@RequestBody ExamDto examDto) {
         System.out.println(examDto.toString());
         Exam exam = ExamMapper.toEntity(examDto);
-        exam=examService.addExam(exam);
+        exam = examService.addExam(exam);
         return new ResponseEntity<>(ExamMapper.toDto(exam), HttpStatus.OK);
     }
 

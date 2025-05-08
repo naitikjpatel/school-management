@@ -9,7 +9,7 @@ import org.springframework.beans.BeanUtils;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class UsersMapper    {
+public class UsersMapper {
 
     public static Users toEntity(UsersDto usersDto) {
         Users users = new Users();
@@ -41,9 +41,9 @@ public class UsersMapper    {
 
         // Copy results if needed, or ignore if unnecessary in response
         //here we getting the list of result so we neeed to convert that all the result enitity to dto
-        List<ResultDtoForUsers> usersDtos=users.getResults().stream()
-                        .map(ResultDtoForUsersMapper::toDto)
-                                .collect(Collectors.toList());
+        List<ResultDtoForUsers> usersDtos = users.getResults().stream()
+                .map(ResultDtoForUsersMapper::toDto)
+                .collect(Collectors.toList());
 
 
         usersDto.setResults(usersDtos);

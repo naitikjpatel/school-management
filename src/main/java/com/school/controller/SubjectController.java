@@ -24,7 +24,7 @@ public class SubjectController {
     public ResponseEntity<List<SubjectDto>> getAllSubject() {
         List<Subject> subjects = subjectService.getAllSubject();
         if (!subjects.isEmpty()) {
-            List<SubjectDto> subjectDtoList=subjects.stream()
+            List<SubjectDto> subjectDtoList = subjects.stream()
                     .map(SubjectMapper::toDto)
                     .collect(Collectors.toList());
             return new ResponseEntity<>(subjectDtoList, HttpStatus.OK);
@@ -36,7 +36,7 @@ public class SubjectController {
     @GetMapping("{subjectId}")
     public ResponseEntity<SubjectDto> getSubjectById(@PathVariable("subjectId") Long subjectId) {
         Subject subject = subjectService.getSubjectById(subjectId);
-        if (subject!=null) {
+        if (subject != null) {
             SubjectDto subjectDto = SubjectMapper.toDto(subject);
             return new ResponseEntity<>(subjectDto, HttpStatus.OK);
         }
@@ -48,7 +48,7 @@ public class SubjectController {
     @PostMapping("addSubject")
     public ResponseEntity<SubjectDto> addSubject(@RequestBody SubjectDto subjectDto) {
         Subject subject = SubjectMapper.toEntity(subjectDto);
-        subject=subjectService.addSubject(subject,subjectDto.getCourse().getCourseId());
+        subject = subjectService.addSubject(subject, subjectDto.getCourse().getCourseId());
         return new ResponseEntity<>(SubjectMapper.toDto(subject), HttpStatus.CREATED);
     }
 

@@ -15,7 +15,6 @@ public class UserType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long userTypeId;
-
     String userTypes;
 
 //    @OneToMany(mappedBy = "userType",cascade = CascadeType.ALL)

@@ -23,9 +23,8 @@ public class UserTypeService {
 
 
         UserType existingUserType = userTypeRepository.findById(userType.getUserTypeId())
-                .orElseThrow(()-> new ResourceNotFoundException("UserType not found with id: " + userType.getUserTypeId()));
-        if(userType.getUserTypes()!=null)
-        {
+                .orElseThrow(() -> new ResourceNotFoundException("UserType not found with id: " + userType.getUserTypeId()));
+        if (userType.getUserTypes() != null) {
             existingUserType.setUserTypes(userType.getUserTypes());
             return userTypeRepository.save(existingUserType);
 

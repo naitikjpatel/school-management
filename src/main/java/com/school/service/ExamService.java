@@ -28,7 +28,7 @@ public class ExamService {
         //examType Find
         exam.setExamType(examType);
         //subject find
-        Subject subject=subjectService.getSubjectById(exam.getSubjects().getSubjectId());
+        Subject subject = subjectService.getSubjectById(exam.getSubjects().getSubjectId());
 
         exam.setSubjects(subject);
 
@@ -36,13 +36,13 @@ public class ExamService {
     }
 
     //Delete Exam Service
-    public Exam deleteExamById(Long examId){
-        Exam exam= examRepository.findById(examId).orElseThrow(() -> new ResourceNotFoundException("Exam is not found with id" + examId));
+    public Exam deleteExamById(Long examId) {
+        Exam exam = examRepository.findById(examId).orElseThrow(() -> new ResourceNotFoundException("Exam is not found with id" + examId));
         return exam;
     }
 
     //Get Exam By id
-    public Exam getExamById(Long examId){
+    public Exam getExamById(Long examId) {
 //        Exam exam=examRepository.findById(examId).get();
 //        if (exam!=null){
 //            return exam;
@@ -53,7 +53,7 @@ public class ExamService {
     }
 
     //Get All Exam
-    public List<Exam> getAllExam(){
+    public List<Exam> getAllExam() {
         return examRepository.findAll();
     }
 }

@@ -24,7 +24,6 @@ public class ExamTypeService {
     }
 
 
-
     public ExamType deleteExamTypeById(Long id) {
         Optional<ExamType> examTypeOpt = examTypeRepository.findById(id);
         if (examTypeOpt.isPresent()) {
@@ -52,8 +51,8 @@ public class ExamTypeService {
     public ExamType updateExamType(ExamType examT) {
         ExamType examType = examTypeRepository.findById(examT.getExamTypeId())
                 .orElseThrow(() -> new ResourceNotFoundException("ExamType not found with id: " + examT.getExamTypeId()));
-        if(examT.getExamTypeName()!=null)
-        examType.setExamTypeName(examT.getExamTypeName());
+        if (examT.getExamTypeName() != null)
+            examType.setExamTypeName(examT.getExamTypeName());
         return examTypeRepository.save(examType);
     }
 

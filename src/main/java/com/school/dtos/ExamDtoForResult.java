@@ -12,5 +12,5 @@ import java.util.Date;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ExamDtoForResult {
     Long examId;
-    Date  examDate;
+    Date examDate;
 }
