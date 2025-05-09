@@ -5,6 +5,9 @@ import com.school.dtos.ResultDto;
 import com.school.entity.Result;
 import com.school.mapper.ResultMapper;
 import com.school.service.ResultService;
+import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,47 +20,68 @@ import java.util.stream.Collectors;
 @RequestMapping(ApiConstants.RESULT)
 public class ResultController {
 
+    private static final Logger logger = LoggerFactory.getLogger(ResultController.class);
+
     @Autowired
     private ResultService resultService;
 
+    // Get Result by ID
     @GetMapping(ApiConstants.RESULT_BY_ID)
     public ResponseEntity<?> getResult(@PathVariable("resultId") Long resultId) {
+        logger.info("Request received to fetch result with ID: {}", resultId);
+
         Result result = resultService.getResultById(resultId);
         if (result == null) {
+            logger.error("Result with ID {} not found.", resultId);
             return new ResponseEntity<>("Result is not found with id :" + resultId, HttpStatus.NOT_FOUND);
         }
+
+        logger.info("Result found: {}", result);
         return new ResponseEntity<>(ResultMapper.toDto(result), HttpStatus.OK);
     }
 
-
+    // Get All Results
     @GetMapping(ApiConstants.GET_ALL_RESULTS)
     public ResponseEntity<?> getAllResult() {
+        logger.info("Request received to fetch all results.");
+
         List<Result> results = resultService.getAllResult();
-        if (results == null) {
+        if (results == null || results.isEmpty()) {
+            logger.warn("No results found.");
             return new ResponseEntity<>("Result is not found", HttpStatus.NO_CONTENT);
         }
+
         List<ResultDto> resultDtoList = results.stream().map(ResultMapper::toDto).collect(Collectors.toList());
+        logger.info("Fetched {} results.", resultDtoList.size());
         return new ResponseEntity<>(resultDtoList, HttpStatus.OK);
     }
 
-
+    // Add New Result
     @PostMapping(ApiConstants.ADD_RESULT)
-    public ResponseEntity<?> addResult(@RequestBody ResultDto resultDto) {
-        System.out.println(resultDto.getUsers().getUserId());
-        Result result = ResultMapper.toEntity(resultDto);
-        System.out.println(result);
+    public ResponseEntity<?> addResult(@Valid @RequestBody ResultDto resultDto) {
+        logger.info("Request received to add result for user: {}", resultDto.getUsers().getUserId());
 
+        Result result = ResultMapper.toEntity(resultDto);
+        logger.debug("Mapped Result entity: {}", result);
 
         result = resultService.addResult(result);
+        logger.info("Result added successfully: {}", result);
+
         return new ResponseEntity<>(ResultMapper.toDto(result), HttpStatus.OK);
     }
+
+    // Delete Result by ID
     @DeleteMapping(ApiConstants.DELETE_RESULT_BY_ID)
     public ResponseEntity<?> deleteResultById(@PathVariable("resultId") Long resultId) {
+        logger.info("Request received to delete result with ID: {}", resultId);
+
         Result result = resultService.deleteResultById(resultId);
         if (result == null) {
+            logger.error("Result with ID {} not found for deletion.", resultId);
             return new ResponseEntity<>("Result is not found with id :" + resultId, HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>("Result is delete with id :" + resultId, HttpStatus.OK);
 
+        logger.info("Result with ID {} deleted successfully.", resultId);
+        return new ResponseEntity<>("Result is deleted with id :" + resultId, HttpStatus.OK);
     }
 }

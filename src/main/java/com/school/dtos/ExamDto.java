@@ -1,7 +1,11 @@
 package com.school.dtos;
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+
 import java.util.Date;
 
 @Getter
@@ -9,9 +13,17 @@ import java.util.Date;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ExamDto {
+
     Long examId;
+
+    @NotNull(message = "Exam date must not be null")
+
     Date examDate;
+
+
     ExamTypeDtoForExam examType;
+
+
     SubjectDtoForCourse subjects;
 
     @Override

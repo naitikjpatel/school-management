@@ -1,1 +1,4 @@
 while adding subject getting infinite response -> in addSubject service method
+        ->sol: make a dtos rather then use a @JsonIgnore and @JsonBackReferances and @JsonManagedReferances
+
+Remainng : adding logging(slf4j) and validation : Done
