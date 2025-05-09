@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 @RestController
 @RequestMapping(ApiConstants.COURSE)
+@CrossOrigin(origins = "http://localhost:3000")
 public class CourseController {
 
     private static final Logger logger = LoggerFactory.getLogger(CourseController.class);

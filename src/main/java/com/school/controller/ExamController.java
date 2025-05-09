@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(ApiConstants.EXAM)
+@CrossOrigin(origins = "http://localhost:3000")
 public class ExamController {
 
     private static final Logger logger = LoggerFactory.getLogger(ExamController.class);
