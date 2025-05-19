@@ -2,3 +2,278 @@ while adding subject getting infinite response -> in addSubject service method
         ->sol: make a dtos rather then use a @JsonIgnore and @JsonBackReferances and @JsonManagedReferances
 
 Remainng : adding logging(slf4j) and validation : Done
+
+
+
+@Entity
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@Table(name = "courses")
+
+public class Course {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long courseId;
+
+    String courseName;
+    String courseDescription;
+
+    //Course Table is Parent Table for the Student Table: for that we are putting the f.k in the Student Table (Child Table)
+//    @JsonIgnore
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+
+    List<Subject> subjects = new ArrayList<>();
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "courses")
+    List<Users> users = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "Course{" +
+                "courseId=" + courseId +
+                ", courseName='" + courseName + '\'' +
+                ", courseDescription='" + courseDescription + '\'' +
+                ", subjects=" + subjects +
+                ", users=" + users +
+                '}';
+    }
+}
+
+
+@Entity
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class Exam {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long examId;
+    Date examDate;
+    @ManyToOne
+    @JoinColumn(name = "exam_type_id")
+    ExamType examType;
+
+    // Many Exams belong to one Subject
+    @ManyToOne
+    @JoinColumn(name = "subjects_id")
+    Subject subjects;
+
+    @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL)
+    List<Result> results = new ArrayList<>();
+
+}
+
+
+package com.school.entity;
+
+import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.experimental.FieldDefaults;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@Table(name = "examtypes")
+public class ExamType {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long examTypeId;
+    String examTypeName;
+    @OneToMany(mappedBy = "examType", cascade = CascadeType.ALL)
+    List<Exam> exams=new ArrayList<>() ;
+
+
+
+}
+
+
+package com.school.entity;
+
+import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.experimental.FieldDefaults;
+
+import java.util.Date;
+
+@Entity
+@Table(name = "results")
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class Result {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long resultId;
+
+    // Pass/Fail status
+    String status;
+    // Date of result or evaluation
+    Date resultDate;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    Users users;
+
+    @ManyToOne
+    @JoinColumn(name = "exam_id")
+    Exam exam;
+
+    @Override
+    public String toString() {
+        return "Result{" +
+                "resultId=" + resultId +
+                ", status='" + status + '\'' +
+                ", resultDate=" + resultDate +
+//                ", users=" + users +
+//                ", exam=" + exam +
+                '}';
+    }
+}
+
+
+package com.school.entity;
+
+import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.experimental.FieldDefaults;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@Table(name = "subjects")
+public class Subject {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long subjectId;
+    String subjectName;
+    Double subjectScore;
+    // Many Subjects belong to one Course
+    @ManyToOne
+//    @JsonIgnore
+    @JoinColumn(name = "course_id")
+    Course course;
+
+    //Here Subject is a Parent Table For the Exam Table : for that we are putting f.k in the Exam Table (child Table)
+    //One Subject Have Many Exam
+    @OneToMany(mappedBy = "subjects", cascade = CascadeType.ALL)
+    List<Exam> exam=new ArrayList<>();
+
+
+}
+
+
+
+package com.school.entity;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.experimental.FieldDefaults;
+
+@Entity
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class UserDetails {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long userDetailId;
+    String details;
+    String address;
+    String phone;
+}
+
+package com.school.entity;
+
+import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.ToString;
+import lombok.experimental.FieldDefaults;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Data
+@Entity
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class Users {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long userId;
+    String firstName;
+    String lastName;
+    String email;
+
+    //one-to-one relation with the user details entity
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_detail_id")
+    UserDetails userDetails;
+
+    //many-to-one relation with usertype entity
+    @ManyToOne
+    @JoinColumn(name = "user_type_id")
+    UserType userType;
+
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
+    List<Result> results = new ArrayList<>();
+
+    //many-to-many relationship with the course entity
+    @ManyToMany
+    @ToString.Exclude
+    @JoinTable(
+            name = "user_courses",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id")
+    )
+    List<Course> courses = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "Users{" +
+                "userId=" + userId +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", userDetails=" + userDetails +
+                ", userType=" + userType +
+                ", results=" + results +
+                '}';
+    }
+}
+
+package com.school.entity;
+
+import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.experimental.FieldDefaults;
+
+@Entity
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class UserType {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long userTypeId;
+    String userTypes;
+
+//    @OneToMany(mappedBy = "userType",cascade = CascadeType.ALL)
+//    List<Users> users;
+}

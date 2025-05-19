@@ -30,8 +30,8 @@ public class UserTypeController {
     public ResponseEntity<UserTypeDto> addUserType(@Valid @RequestBody UserTypeDto userTypeDto) {
         logger.info("Received request to add user type: {}", userTypeDto);
 
-        UserType userType = UserTypeMapper.toEntity(userTypeDto);
-        UserType saved = userTypeService.addUserType(userType);
+//        UserType userType = UserTypeMapper.toEntity(userTypeDto);
+        UserType saved = userTypeService.addUserType(UserTypeMapper.toEntity(userTypeDto));
 
         if (saved != null) {
             logger.info("User type added successfully with ID: {}", saved.getUserTypeId());

@@ -3,6 +3,7 @@ package com.school.entity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
+import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 
 import java.util.ArrayList;
@@ -35,6 +36,7 @@ public class Users {
 
     //many-to-many relationship with the course entity
     @ManyToMany
+    @ToString.Exclude
     @JoinTable(
             name = "user_courses",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -42,5 +44,16 @@ public class Users {
     )
     List<Course> courses = new ArrayList<>();
 
-
+    @Override
+    public String toString() {
+        return "Users{" +
+                "userId=" + userId +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", userDetails=" + userDetails +
+                ", userType=" + userType +
+                ", results=" + results +
+                '}';
+    }
 }

@@ -2,19 +2,38 @@ package com.school.mapper;
 
 import com.school.dtos.UserDetailsDto;
 import com.school.entity.UserDetails;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.BeanUtils;
 
 public class UserDetailsMapper {
 
-    public static UserDetails toEntity(UserDetailsDto userDetailsDto) {
-        UserDetails userDetails = new UserDetails();
-        BeanUtils.copyProperties(userDetailsDto, userDetails);
-        return userDetails;
+    public static UserDetails toEntity(UserDetailsDto dto) {
+        if (dto == null) {
+            return null;
+        }
+
+        UserDetails entity = new UserDetails();
+        entity.setUserDetailId(dto.getUserDetailId());
+        entity.setDetails(dto.getDetails());
+        entity.setAddress(dto.getAddress());
+        entity.setPhone(dto.getPhone());
+        // Map other fields as necessary
+
+        return entity;
     }
 
-    public static UserDetailsDto toDto(UserDetails userDetails) {
-        UserDetailsDto userDetailsDto = new UserDetailsDto();
-        BeanUtils.copyProperties(userDetails, userDetailsDto);
-        return userDetailsDto;
+    public static UserDetailsDto toDto(UserDetails entity) {
+        if (entity == null) {
+            return null;
+        }
+
+        UserDetailsDto dto = new UserDetailsDto();
+        dto.setUserDetailId(entity.getUserDetailId());
+        dto.setDetails(entity.getDetails());
+        dto.setAddress(entity.getAddress());
+        dto.setPhone(entity.getPhone());
+        // Map other fields as necessary
+
+        return dto;
     }
 }

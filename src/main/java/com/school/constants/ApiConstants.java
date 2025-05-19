@@ -12,6 +12,7 @@ public class ApiConstants {
     public static final String UPDATE_USER = "/updateUser";
     public static final String USER_BY_ID = "/{userId}";
     public static final String DELETE_USER_BY_ID = "/{userId}";
+    public static final String UPDATE_USER_BY_ID = "/{userId}";
 
     // Exam Endpoints
     public static final String EXAM = BASE_API + "/exam";

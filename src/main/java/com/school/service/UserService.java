@@ -2,6 +2,8 @@ package com.school.service;
 
 import com.school.Exception.ResourceNotFoundException;
 
+import com.school.dtos.LoginRequest;
+import com.school.dtos.UserResultDto;
 import com.school.entity.UserDetails;
 import com.school.entity.UserType;
 import com.school.entity.Users;
@@ -107,4 +109,17 @@ public class UserService {
         return usersRepository.findAll();
     }
 
+
+    public Users saveUser(Users user) {
+        return usersRepository.save(user);
+    }
+
+
+    public List<UserResultDto> getUserResults(Long userId) {
+        return usersRepository.findUserResults(userId);
+    }
+
+    public Users authenticate(LoginRequest loginRequest){
+        return  usersRepository.findByUserIdAndEmail(loginRequest.getUserId(),loginRequest.getEmail()).orElse(null);
+    }
 }
