@@ -62,15 +62,26 @@ public class SubjectController {
 
     // Add New Subject
     @PostMapping(ApiConstants.ADD_SUBJECT)
-    public ResponseEntity<SubjectDto> addSubject(@Valid @RequestBody SubjectDto subjectDto) {
+    public ResponseEntity<SubjectDto> addSubject(@Valid @RequestBody SubjectDto subjectDto,@PathVariable Long courseId) {
         logger.info("Request received to add new subject: {}", subjectDto.getSubjectName());
 
         Subject subject = SubjectMapper.toEntity(subjectDto);
         logger.debug("Mapped Subject entity: {}", subject);
 
-        subject = subjectService.addSubject(subject, subjectDto.getCourse().getCourseId());
+//        subject = subjectService.addSubject(subject, subjectDto.getCourse().getCourseId())
+        subject=subjectService.addSubject(subject,courseId);
         logger.info("Subject added successfully: {}", subject);
 
         return new ResponseEntity<>(SubjectMapper.toDto(subject), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping(ApiConstants.DELETE_SUBJECT_BY_ID)
+    public ResponseEntity<SubjectDto> deleteSubjectById(@PathVariable Long subjectId) {
+        logger.info("Request received to delete subject with ID: {}", subjectId);
+        Subject subject = subjectService.getSubjectById(subjectId);
+        if (subject != null) {
+            subjectService.deleteSubjectById(subjectId);
+        }
+        return new ResponseEntity<>(SubjectMapper.toDto(subject), HttpStatus.OK);
     }
 }

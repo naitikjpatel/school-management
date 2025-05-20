@@ -13,7 +13,7 @@ public class ApiConstants {
     public static final String USER_BY_ID = "/{userId}";
     public static final String DELETE_USER_BY_ID = "/{userId}";
     public static final String UPDATE_USER_BY_ID = "/{userId}";
-
+    public static final String ADD_USER_COURSE_ID = "/addUser/{courseId}";
     // Exam Endpoints
     public static final String EXAM = BASE_API + "/exam";
     public static final String ADD_EXAM = "/addExam";
@@ -31,10 +31,10 @@ public class ApiConstants {
 
     // Subject Endpoints
     public static final String SUBJECT = BASE_API + "/subject";
-    public static final String ADD_SUBJECT = "/addSubject";
+    public static final String ADD_SUBJECT = "/addSubject/{courseId}";
     public static final String GET_ALL_SUBJECTS = "/getAllSubject";
     public static final String SUBJECT_BY_ID = "/{subjectId}";
-
+    public static final String DELETE_SUBJECT_BY_ID = "/{subjectId}";
     // User Details Endpoints
     public static final String USER_DETAILS = BASE_API + "/usersDetails";
     public static final String ADD_USER_DETAILS = "/addUserDetails";

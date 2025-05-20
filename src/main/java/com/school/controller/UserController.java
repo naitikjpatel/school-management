@@ -1,13 +1,17 @@
 package com.school.controller;
 
 import com.school.constants.ApiConstants;
+import com.school.dtos.CourseDto;
 import com.school.dtos.LoginRequest;
 import com.school.dtos.UserResultDto;
 import com.school.dtos.UsersDto;
+import com.school.entity.Course;
 import com.school.entity.Users;
+import com.school.mapper.CourseMapper;
 import com.school.mapper.UserDetailsMapper;
 import com.school.mapper.UserTypeMapper;
 import com.school.mapper.UsersMapper;
+import com.school.service.CourseService;
 import com.school.service.UserService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
@@ -17,6 +21,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,6 +34,8 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private CourseService courseService;
 
     // Add User
     @PostMapping(ApiConstants.ADD_USER)
@@ -46,6 +53,29 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
+@PostMapping(ApiConstants.ADD_USER_COURSE_ID)
+public ResponseEntity<UsersDto> addUser1(@Valid @RequestBody UsersDto userDto,@PathVariable Long courseId) {
+    logger.info("Received request to add new user: {}", userDto);
+        courseId=courseId==-1?1:courseId;
+    Course course=courseService.getCourseById(courseId);
+    CourseDto courseDto= CourseMapper.toDto(course);
+    course=CourseMapper.toEntity(courseDto);
+
+    Users user = UsersMapper.toEntity(userDto);
+    List<Course> c=new ArrayList<>();
+    c.add(course);
+    user.setCourses(c);
+    Users createdUser = userService.addUser(user);
+
+    if (createdUser != null) {
+        logger.info("User created successfully with ID: {}", createdUser.getUserId());
+        return new ResponseEntity<>(UsersMapper.toDto(createdUser), HttpStatus.CREATED);
+    } else {
+        logger.error("Failed to create user: {}", userDto);
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+}
 
     // Get All Users
     @GetMapping(ApiConstants.GET_ALL_USERS)

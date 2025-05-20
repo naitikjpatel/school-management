@@ -22,7 +22,7 @@ public class Course {
     String courseName;
     String courseDescription;
 
-    //Course Table is Parent Table for the Student Table: for that we are putting the f.k in the Student Table (Child Table)
+    //Course Table is Parent Table for the Student Table: for that we are putting the f.k in the Student Table (Child Table).
 //    @JsonIgnore
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
 
@@ -43,3 +43,4 @@ public class Course {
                 '}';
     }
 }
+
