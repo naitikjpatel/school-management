@@ -279,3 +279,66 @@ public class UserType {
 //    @OneToMany(mappedBy = "userType",cascade = CascadeType.ALL)
 //    List<Users> users;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+====================================================
+
+
+package com.school.repository;
+
+import com.school.dto.CourseSubjectExamResultDTO;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public interface CourseRepository extends JpaRepository<Course, Long> {
+
+    @Query("SELECT new com.school.dto.CourseSubjectExamResultDTO(" +
+           "c.courseId, c.courseName, s.subjectId, s.subjectName, e.examId, e.examName, " +
+           "e.examType.examTypeId, e.examType.examTypeName, s.subjectScore, e.examDate, " +
+           "r.resultId, r.status, r.resultDate) " +
+           "FROM Course c " +
+           "JOIN c.subjects s " +
+           "JOIN s.exam e " +
+           "LEFT JOIN e.results r " +
+           "WHERE c IN (SELECT uc.course FROM UserCourses uc WHERE uc.user.userId = :userId)")
+    List<CourseSubjectExamResultDTO> findCourseSubjectExamResultsByUserId(@Param("userId") Long userId);
+}
+
+
+package com.school.dto;
+
+import java.util.Date;
+
+public class CourseSubjectExamResultDTO {
+    private Long courseId;
+    private String courseName;
+    private Long subjectId;
+    private String subjectName;
+    private Long examId;
+    private String examName;
+    private Long examTypeId;
+    private String examTypeName;
+    private Double subjectScore;
+    private Date examDate;
+    private Long resultId;
+    private String status;
+    private Date resultDate;
+
+    // Getters and Setters
+}

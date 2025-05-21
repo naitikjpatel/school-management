@@ -2,6 +2,7 @@ package com.school.controller;
 
 import com.school.constants.ApiConstants;
 import com.school.dtos.ResultDto;
+import com.school.dtos.ResultDtoForUser;
 import com.school.entity.Result;
 import com.school.mapper.ResultMapper;
 import com.school.service.ResultService;
@@ -84,5 +85,17 @@ public class ResultController {
 
         logger.info("Result with ID {} deleted successfully.", resultId);
         return new ResponseEntity<>("Result is deleted with id :" + resultId, HttpStatus.OK);
+    }
+
+
+
+    @GetMapping(ApiConstants.RESULT_BY_STUDENT_ID)
+    public List<ResultDtoForUser> getStudentResults(@PathVariable Long userId) {
+        return resultService.getResultsByUser(userId);
+    }
+
+    @GetMapping(ApiConstants.RESULT_BY_EXAM_ID)
+    public List<ResultDtoForUser> getTeacherResults(@PathVariable Long examId) {
+        return resultService.getResultsByExam(examId);
     }
 }

@@ -63,4 +63,6 @@ public class ApiConstants {
     public static final String GET_ALL_RESULTS = "/getAllResult";
     public static final String RESULT_BY_ID = "/{resultId}";
     public static final String DELETE_RESULT_BY_ID = "/{resultId}";
+    public static final String RESULT_BY_STUDENT_ID="/student/{userId}";
+    public static final String RESULT_BY_EXAM_ID="/teacher/{examId}";
 }

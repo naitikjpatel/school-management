@@ -1,6 +1,7 @@
 package com.school.service;
 
 import com.school.Exception.ResourceNotFoundException;
+import com.school.dtos.ResultDtoForUser;
 import com.school.entity.Exam;
 import com.school.entity.Result;
 import com.school.entity.Users;
@@ -72,6 +73,15 @@ public class ResultService {
             return existingResult;
         }
         return null;
+    }
+
+
+    public List<ResultDtoForUser> getResultsByUser(Long userId) {
+        return resultRepository.findResultsByUserId(userId);
+    }
+
+    public List<ResultDtoForUser> getResultsByExam(Long examId) {
+        return resultRepository.findResultsByExamId(examId);
     }
 
 }
