@@ -17,7 +17,7 @@ public class Subject {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long subjectId;
     String subjectName;
-    Double subjectScore;
+
     // Many Subjects belong to one Course
     @ManyToOne
 //    @JsonIgnore

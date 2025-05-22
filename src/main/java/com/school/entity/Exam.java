@@ -17,7 +17,7 @@ public class Exam {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long examId;
-    Date examDate;
+    Date examDate=new Date() ;
     @ManyToOne
     @JoinColumn(name = "exam_type_id")
     ExamType examType;

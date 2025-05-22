@@ -5,6 +5,7 @@ import com.school.dtos.ResultDto;
 import com.school.dtos.ResultDtoForUser;
 import com.school.entity.Result;
 import com.school.mapper.ResultMapper;
+import com.school.repository.ResultRepository;
 import com.school.service.ResultService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
@@ -26,6 +27,8 @@ public class ResultController {
 
     @Autowired
     private ResultService resultService;
+    @Autowired
+    private ResultRepository resultRepository;
 
     // Get Result by ID
     @GetMapping(ApiConstants.RESULT_BY_ID)
@@ -60,16 +63,22 @@ public class ResultController {
 
     // Add New Result
     @PostMapping(ApiConstants.ADD_RESULT)
-    public ResponseEntity<?> addResult(@Valid @RequestBody ResultDto resultDto) {
-        logger.info("Request received to add result for user: {}", resultDto.getUsers().getUserId());
+    public ResponseEntity<?> addResult(@Valid @RequestBody List<ResultDto> resultDtos) {
+        for (ResultDto resultDto : resultDtos) {
 
-        Result result = ResultMapper.toEntity(resultDto);
-        logger.debug("Mapped Result entity: {}", result);
 
-        result = resultService.addResult(result);
-        logger.info("Result added successfully: {}", result);
+            logger.info("Request received to add result for user: {}", resultDto.getUsers().getUserId());
+//            List<Result>addedResult=resultRepository.findByUsers_UserIdAndExam_ExamId(resultDto.getUsers().getUserId(), resultDto.getExam().getExamId());
+//            if (addedResult == null) {
+                Result result = ResultMapper.toEntity(resultDto);
+                logger.debug("Mapped Result entity: {}", result);
 
-        return new ResponseEntity<>(ResultMapper.toDto(result), HttpStatus.OK);
+                result = resultService.addResult(result);
+
+                logger.info("Result added successfully: {}", result);
+//            }
+        }
+        return new ResponseEntity<>("Result Added Successfully", HttpStatus.OK);
     }
 
     // Delete Result by ID
@@ -90,8 +99,9 @@ public class ResultController {
 
 
     @GetMapping(ApiConstants.RESULT_BY_STUDENT_ID)
-    public List<ResultDtoForUser> getStudentResults(@PathVariable Long userId) {
-        return resultService.getResultsByUser(userId);
+    public List<ResultDtoForUser> getStudentResults(@PathVariable Long userId) {//,@RequestParam(name = "subjectId") Long subjectId
+        List<ResultDtoForUser> userResults=resultService.getResultsByUser(userId);
+        return userResults;
     }
 
     @GetMapping(ApiConstants.RESULT_BY_EXAM_ID)

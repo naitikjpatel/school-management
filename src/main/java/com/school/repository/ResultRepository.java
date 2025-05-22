@@ -11,7 +11,7 @@ import java.util.List;
 public interface ResultRepository extends JpaRepository<Result, Long> {
 
 
-        @Query("SELECT new com.school.dtos.ResultDtoForUser(r.resultId, r.status, r.resultDate, u.userId, u.firstName, e.examId, e.examType.examTypeName,s.subjectName) " +
+        @Query("SELECT new com.school.dtos.ResultDtoForUser(r.resultId, r.status, r.resultDate, u.userId, u.firstName, e.examId, e.examType.examTypeName,s.subjectId,s.subjectName) " +
                 "FROM Result r " +
                 "JOIN r.users u " +
                 "JOIN r.exam e " +
@@ -19,13 +19,16 @@ public interface ResultRepository extends JpaRepository<Result, Long> {
                 "WHERE u.userId = :userId")
         List<ResultDtoForUser> findResultsByUserId(@Param("userId") Long userId);
 
-        @Query("SELECT new com.school.dtos.ResultDtoForUser(r.resultId, r.status, r.resultDate, u.userId, u.firstName, e.examId, e.examType.examTypeName,s.subjectName) " +
+        @Query("SELECT new com.school.dtos.ResultDtoForUser(r.resultId, r.status, r.resultDate, u.userId, u.firstName, e.examId, e.examType.examTypeName,s.subjectId,s.subjectName) " +
                 "FROM Result r " +
                 "JOIN r.users u " +
                 "JOIN r.exam e " +
                 "JOIN e.subjects s " +
                 "WHERE e.examId = :examId")
         List<ResultDtoForUser> findResultsByExamId(@Param("examId") Long examId);
+
+
+                List<Result> findByUsers_UserIdAndExam_ExamId(Long userId, Long examId);
 
 
 

@@ -1,9 +1,15 @@
 package com.school.controller;
 
 import com.school.constants.ApiConstants;
+import com.school.dtos.ExamDto;
+import com.school.dtos.ExamTypeDtoForExam;
 import com.school.dtos.SubjectDto;
+import com.school.dtos.SubjectDtoForCourse;
+import com.school.entity.Exam;
 import com.school.entity.Subject;
+import com.school.mapper.ExamMapper;
 import com.school.mapper.SubjectMapper;
+import com.school.service.ExamService;
 import com.school.service.SubjectService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
@@ -25,6 +31,8 @@ public class SubjectController {
 
     @Autowired
     private SubjectService subjectService;
+    @Autowired
+    private ExamService examService;
 
     // Get All Subjects
     @GetMapping(ApiConstants.GET_ALL_SUBJECTS)
@@ -71,6 +79,16 @@ public class SubjectController {
 //        subject = subjectService.addSubject(subject, subjectDto.getCourse().getCourseId())
         subject=subjectService.addSubject(subject,courseId);
         logger.info("Subject added successfully: {}", subject);
+//New for :: while adding a subject assinning default examType and subject Storing into a exam
+        ExamTypeDtoForExam examType=new ExamTypeDtoForExam();
+        SubjectDtoForCourse sub =new SubjectDtoForCourse();
+        examType.setExamTypeId(2l);
+        sub.setSubjectId(subject.getSubjectId());;
+        ExamDto examDto=new ExamDto();
+        Exam exam = ExamMapper.toEntity(examDto);
+        exam = examService.addExam(exam);
+
+
 
         return new ResponseEntity<>(SubjectMapper.toDto(subject), HttpStatus.CREATED);
     }

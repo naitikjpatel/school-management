@@ -18,5 +18,8 @@ public class ResultDtoForUser {
      String userName;
      Long examId;
      String examName;
+     Long subjectId;
      String subjectName;
+
+
 }

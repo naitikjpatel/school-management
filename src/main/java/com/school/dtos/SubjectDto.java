@@ -20,7 +20,7 @@ public class SubjectDto {
     @Size(min = 3, max = 100, message = "Subject name must be between 3 and 100 characters")
     String subjectName;
 
-    Double subjectScore;
+
     CourseDtoForSubject course;
     List<ExamDto> exam;
 }
