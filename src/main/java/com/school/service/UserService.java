@@ -4,12 +4,14 @@ import com.school.Exception.ResourceNotFoundException;
 
 import com.school.dtos.LoginRequest;
 import com.school.dtos.UserResultDto;
+import com.school.entity.Course;
 import com.school.entity.UserDetails;
 import com.school.entity.UserType;
 import com.school.entity.Users;
 import com.school.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -41,7 +43,7 @@ public class UserService {
         user.setUserDetails(userDetails);
         return usersRepository.save(user);
     }
-    
+
     //Get Users by I'd Service
     public Users getUserById(Long id) {
         Users users = usersRepository.findById(id)
@@ -49,11 +51,13 @@ public class UserService {
         return users;
 
     }
-    
+
     //Delete User By I'd Service
     public Users deleteUserById(Long id) {
         Optional<Users> usersOptional = usersRepository.findById(id);
         if (usersOptional.isPresent()) {
+//            userCourseRepository.deleteByUser_UserId(usersOptional.get().getUserId());
+//            userCourseRepository.deleteByUserId(usersOptional.get().getUserId());
             usersRepository.delete(usersOptional.get());
             return usersOptional.get();
         }
@@ -119,7 +123,7 @@ public class UserService {
         return usersRepository.findUserResults(userId);
     }
 
-    public Users authenticate(LoginRequest loginRequest){
-        return  usersRepository.findByUserIdAndEmail(loginRequest.getUserId(),loginRequest.getEmail()).orElse(null);
+    public Users authenticate(LoginRequest loginRequest) {
+        return usersRepository.findByUserIdAndEmail(loginRequest.getUserId(), loginRequest.getEmail()).orElse(null);
     }
 }

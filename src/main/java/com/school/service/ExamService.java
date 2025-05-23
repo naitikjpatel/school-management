@@ -8,6 +8,7 @@ import com.school.repository.ExamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -29,6 +30,9 @@ public class ExamService {
         //subject find
         Subject subject = subjectService.getSubjectById(exam.getSubjects().getSubjectId());
         exam.setSubjects(subject);
+        if (exam.getExamDate() == null) {
+            exam.setExamDate(new Date());
+        }
         return examRepository.save(exam);
     }
 

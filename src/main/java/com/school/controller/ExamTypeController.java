@@ -12,12 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(ApiConstants.EXAM_TYPE)
-@CrossOrigin(origins = "http://localhost:3000")
 public class ExamTypeController {
 
     private static final Logger logger = LoggerFactory.getLogger(ExamTypeController.class);

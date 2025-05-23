@@ -342,3 +342,21 @@ public class CourseSubjectExamResultDTO {
 
     // Getters and Setters
 }
+
+
+=============================
+
+{
+
+  "examDate": "2025-07-21",
+  "examType": {
+    "examTypeId":2
+  },
+  "subjects": {
+    "subjectId":16
+  }
+}
+
+
+
+https://useful.codes/handling-user-roles-and-permissions-in-spring-boot/

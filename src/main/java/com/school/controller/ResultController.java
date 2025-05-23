@@ -20,7 +20,6 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(ApiConstants.RESULT)
-@CrossOrigin(origins = "http://localhost:3000")
 public class ResultController {
 
     private static final Logger logger = LoggerFactory.getLogger(ResultController.class);
@@ -70,12 +69,12 @@ public class ResultController {
             logger.info("Request received to add result for user: {}", resultDto.getUsers().getUserId());
 //            List<Result>addedResult=resultRepository.findByUsers_UserIdAndExam_ExamId(resultDto.getUsers().getUserId(), resultDto.getExam().getExamId());
 //            if (addedResult == null) {
-                Result result = ResultMapper.toEntity(resultDto);
-                logger.debug("Mapped Result entity: {}", result);
+            Result result = ResultMapper.toEntity(resultDto);
+            logger.debug("Mapped Result entity: {}", result);
 
-                result = resultService.addResult(result);
+            result = resultService.addResult(result);
 
-                logger.info("Result added successfully: {}", result);
+            logger.info("Result added successfully: {}", result);
 //            }
         }
         return new ResponseEntity<>("Result Added Successfully", HttpStatus.OK);
@@ -97,10 +96,9 @@ public class ResultController {
     }
 
 
-
     @GetMapping(ApiConstants.RESULT_BY_STUDENT_ID)
     public List<ResultDtoForUser> getStudentResults(@PathVariable Long userId) {//,@RequestParam(name = "subjectId") Long subjectId
-        List<ResultDtoForUser> userResults=resultService.getResultsByUser(userId);
+        List<ResultDtoForUser> userResults = resultService.getResultsByUser(userId);
         return userResults;
     }
 

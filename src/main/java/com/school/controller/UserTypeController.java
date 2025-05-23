@@ -18,7 +18,6 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(ApiConstants.USER_TYPE)
-@CrossOrigin(origins = "http://localhost:3000")
 public class UserTypeController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserTypeController.class);

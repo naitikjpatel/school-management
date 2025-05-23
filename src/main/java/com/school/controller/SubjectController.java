@@ -24,7 +24,6 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(ApiConstants.SUBJECT)
-@CrossOrigin(origins = "http://localhost:3000")
 public class SubjectController {
 
     private static final Logger logger = LoggerFactory.getLogger(SubjectController.class);
@@ -70,24 +69,35 @@ public class SubjectController {
 
     // Add New Subject
     @PostMapping(ApiConstants.ADD_SUBJECT)
-    public ResponseEntity<SubjectDto> addSubject(@Valid @RequestBody SubjectDto subjectDto,@PathVariable Long courseId) {
+    public ResponseEntity<SubjectDto> addSubject(@Valid @RequestBody SubjectDto subjectDto, @PathVariable Long courseId) {
         logger.info("Request received to add new subject: {}", subjectDto.getSubjectName());
 
+//        Step 1: Here Getting a subjectName and courseId from the frontend
         Subject subject = SubjectMapper.toEntity(subjectDto);
         logger.debug("Mapped Subject entity: {}", subject);
 
 //        subject = subjectService.addSubject(subject, subjectDto.getCourse().getCourseId())
-        subject=subjectService.addSubject(subject,courseId);
+        subject = subjectService.addSubject(subject, courseId);
         logger.info("Subject added successfully: {}", subject);
-//New for :: while adding a subject assinning default examType and subject Storing into a exam
-        ExamTypeDtoForExam examType=new ExamTypeDtoForExam();
-        SubjectDtoForCourse sub =new SubjectDtoForCourse();
+//New for ::  Assigning a Default Final Exam to a Subject
+        ExamTypeDtoForExam examType = new ExamTypeDtoForExam();
+        SubjectDtoForCourse sub = new SubjectDtoForCourse();
         examType.setExamTypeId(2l);
-        sub.setSubjectId(subject.getSubjectId());;
-        ExamDto examDto=new ExamDto();
+        sub.setSubjectId(subject.getSubjectId());
+        ;
+        ExamDto examDto = new ExamDto();
+        examDto.setExamType(examType);
+        examDto.setSubjects(sub);
         Exam exam = ExamMapper.toEntity(examDto);
         exam = examService.addExam(exam);
 
+//      :: Assigning a Default Mid Exam to a subject
+        examType.setExamTypeId(1l);
+        sub.setSubjectId(subject.getSubjectId());
+        examDto.setSubjects(sub);
+        examDto.setExamType(examType);
+        exam = ExamMapper.toEntity(examDto);
+        exam = examService.addExam(exam); //Adding a Mid Exam
 
 
         return new ResponseEntity<>(SubjectMapper.toDto(subject), HttpStatus.CREATED);

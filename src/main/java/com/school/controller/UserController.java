@@ -12,6 +12,7 @@ import com.school.mapper.UserDetailsMapper;
 import com.school.mapper.UserTypeMapper;
 import com.school.mapper.UsersMapper;
 import com.school.service.CourseService;
+import com.school.service.MailService;
 import com.school.service.UserService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
@@ -27,7 +28,6 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(ApiConstants.USERS)
-@CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
@@ -36,6 +36,9 @@ public class UserController {
     private UserService userService;
     @Autowired
     private CourseService courseService;
+
+    @Autowired
+    private MailService mailService;
 
     // Add User
     @PostMapping(ApiConstants.ADD_USER)
@@ -54,28 +57,36 @@ public class UserController {
         }
     }
 
-@PostMapping(ApiConstants.ADD_USER_COURSE_ID)
-public ResponseEntity<UsersDto> addUser1(@Valid @RequestBody UsersDto userDto,@PathVariable Long courseId) {
-    logger.info("Received request to add new user: {}", userDto);
-        courseId=courseId==-1?1:courseId;
-    Course course=courseService.getCourseById(courseId);
-    CourseDto courseDto= CourseMapper.toDto(course);
-    course=CourseMapper.toEntity(courseDto);
-
-    Users user = UsersMapper.toEntity(userDto);
-    List<Course> c=new ArrayList<>();
-    c.add(course);
-    user.setCourses(c);
-    Users createdUser = userService.addUser(user);
-
-    if (createdUser != null) {
-        logger.info("User created successfully with ID: {}", createdUser.getUserId());
-        return new ResponseEntity<>(UsersMapper.toDto(createdUser), HttpStatus.CREATED);
-    } else {
-        logger.error("Failed to create user: {}", userDto);
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    @PostMapping(ApiConstants.MAIL_SEND)
+    public void sendEmail(@PathVariable("userId") Long userId, @PathVariable("email") String email) {
+        mailService.sendCredentialMail(userId, email);
     }
-}
+
+    @PostMapping(ApiConstants.ADD_USER_COURSE_ID)
+    public ResponseEntity<UsersDto> addUser1(@Valid @RequestBody UsersDto userDto, @PathVariable Long courseId) {
+        logger.info("Received request to add new user: {}", userDto);
+        courseId = courseId == -1 ? 1 : courseId;
+        Course course = courseService.getCourseById(courseId);
+        CourseDto courseDto = CourseMapper.toDto(course);
+        course = CourseMapper.toEntity(courseDto);
+
+        Users user = UsersMapper.toEntity(userDto);
+        List<Course> c = new ArrayList<>();
+        c.add(course);
+        user.setCourses(c);
+        Users createdUser = userService.addUser(user);
+
+        if (createdUser != null) {
+//        System.out.println("UserId: " + createdUser.getUserId());
+//        System.out.println("Email: " + createdUser.getEmail());
+            mailService.sendCredentialMail(createdUser.getUserId(), createdUser.getEmail());
+            logger.info("User created successfully with ID: {}", createdUser.getUserId());
+            return new ResponseEntity<>(UsersMapper.toDto(createdUser), HttpStatus.CREATED);
+        } else {
+            logger.error("Failed to create user: {}", userDto);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 
     // Get All Users
     @GetMapping(ApiConstants.GET_ALL_USERS)
@@ -185,9 +196,9 @@ public ResponseEntity<UsersDto> addUser1(@Valid @RequestBody UsersDto userDto,@P
     }
 
     @PostMapping("/login")
-    public ResponseEntity<UsersDto> loginRequest(@RequestBody LoginRequest loginRequest){
-        System.out.println(loginRequest.getUserId()+" : "+loginRequest.getEmail());
-        Users users=userService.authenticate(loginRequest);
+    public ResponseEntity<UsersDto> loginRequest(@RequestBody LoginRequest loginRequest) {
+        System.out.println(loginRequest.getUserId() + " : " + loginRequest.getEmail());
+        Users users = userService.authenticate(loginRequest);
         if (users != null) {
             System.out.println("Login successful");
             logger.info("User found: {}", users);

@@ -29,7 +29,7 @@ public class Course {
     List<Subject> subjects = new ArrayList<>();
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "courses")
+    @ManyToMany(mappedBy = "courses" ,cascade = CascadeType.ALL)
     List<Users> users = new ArrayList<>();
 
     @Override

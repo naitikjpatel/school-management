@@ -14,6 +14,7 @@ public class ApiConstants {
     public static final String DELETE_USER_BY_ID = "/{userId}";
     public static final String UPDATE_USER_BY_ID = "/{userId}";
     public static final String ADD_USER_COURSE_ID = "/addUser/{courseId}";
+    public static final String MAIL_SEND="mail/{userId}/{email}";
     // Exam Endpoints
     public static final String EXAM = BASE_API + "/exam";
     public static final String ADD_EXAM = "/addExam";
