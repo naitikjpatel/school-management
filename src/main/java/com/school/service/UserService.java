@@ -126,4 +126,5 @@ public class UserService {
     public Users authenticate(LoginRequest loginRequest) {
         return usersRepository.findByUserIdAndEmail(loginRequest.getUserId(), loginRequest.getEmail()).orElse(null);
     }
+
 }
