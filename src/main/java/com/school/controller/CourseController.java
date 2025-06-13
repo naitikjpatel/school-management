@@ -84,6 +84,7 @@ public class CourseController {
         return new ResponseEntity<>("Course with id : " + courseId + " is not found", HttpStatus.NOT_FOUND);
     }
 
+
     @PutMapping(ApiConstants.UPDATE_COURSE)
     public ResponseEntity<CourseDto> updateCourse(@RequestBody CourseDto courseDto) {
         logger.info("Request received to update course: {}", courseDto);

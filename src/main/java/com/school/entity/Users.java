@@ -22,7 +22,7 @@ public class Users {
     String email;
 
     //one-to-one relation with the user details entity
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
     @JoinColumn(name = "user_detail_id")
     UserDetails userDetails;
 
@@ -31,7 +31,7 @@ public class Users {
     @JoinColumn(name = "user_type_id")
     UserType userType;
 
-    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL,orphanRemoval = true)
     List<Result> results = new ArrayList<>();
 
     //many-to-many relationship with the course entity

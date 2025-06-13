@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,7 +80,7 @@ public class UserController {
         if (createdUser != null) {
 //        System.out.println("UserId: " + createdUser.getUserId());
 //        System.out.println("Email: " + createdUser.getEmail());
-            mailService.sendCredentialMail(createdUser.getUserId(), createdUser.getEmail());
+//            mailService.sendCredentialMail(createdUser.getUserId(), createdUser.getEmail());
             logger.info("User created successfully with ID: {}", createdUser.getUserId());
             return new ResponseEntity<>(UsersMapper.toDto(createdUser), HttpStatus.CREATED);
         } else {
@@ -106,21 +107,37 @@ public class UserController {
     }
 
     // Delete User by ID
+//    @DeleteMapping(ApiConstants.DELETE_USER_BY_ID)
+//    public ResponseEntity<?> deleteUser(@PathVariable Long userId) {
+//        logger.info("Received request to delete user with ID: {}", userId);
+//
+//        Users deletedUser = userService.deleteUserById(userId);
+//
+//        if (deletedUser != null) {
+//            logger.info("User deleted successfully with ID: {}", userId);
+//            return new ResponseEntity<>(UsersMapper.toDto(deletedUser), HttpStatus.OK);
+//        }
+//
+//        logger.error("User with ID {} not found for deletion.", userId);
+//        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+//                .body("User with ID " + userId + " not found");
+//    }
+
     @DeleteMapping(ApiConstants.DELETE_USER_BY_ID)
-    public ResponseEntity<?> deleteUser(@PathVariable Long userId) {
-        logger.info("Received request to delete user with ID: {}", userId);
-
-        Users deletedUser = userService.deleteUserById(userId);
-
-        if (deletedUser != null) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteUser(@PathVariable Long userId) {
+        logger.info("Deleting user with ID: {}", userId);
+        boolean deleted = userService.deleteUserById(userId);
+        if(deleted){
             logger.info("User deleted successfully with ID: {}", userId);
-            return new ResponseEntity<>(UsersMapper.toDto(deletedUser), HttpStatus.OK);
         }
-
-        logger.error("User with ID {} not found for deletion.", userId);
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body("User with ID " + userId + " not found");
+        if (!deleted) {
+            logger.error("User with ID {} not found for deletion.", userId);
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "User not found: " + userId);
+        }
     }
+
 
     // Update User
     @PutMapping(ApiConstants.UPDATE_USER)
@@ -151,9 +168,15 @@ public class UserController {
         }
 
         // Update the fields of the existing user with the new data
-        existingUser.setFirstName(userDto.getFirstName());
-        existingUser.setLastName(userDto.getLastName());
-        existingUser.setEmail(userDto.getEmail());
+        if(userDto.getFirstName()!=null) {
+            existingUser.setFirstName(userDto.getFirstName());
+        }
+        if(userDto.getLastName()!=null) {
+            existingUser.setLastName(userDto.getLastName());
+        }
+        if(userDto.getEmail()!=null) {
+            existingUser.setEmail(userDto.getEmail());
+        }
         // Update other fields as necessary
 
         // Optionally, update related entities like UserDetails or UserType

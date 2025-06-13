@@ -53,15 +53,15 @@ public class UserService {
     }
 
     //Delete User By I'd Service
-    public Users deleteUserById(Long id) {
+    public boolean deleteUserById(Long id) {
         Optional<Users> usersOptional = usersRepository.findById(id);
         if (usersOptional.isPresent()) {
 //            userCourseRepository.deleteByUser_UserId(usersOptional.get().getUserId());
 //            userCourseRepository.deleteByUserId(usersOptional.get().getUserId());
             usersRepository.delete(usersOptional.get());
-            return usersOptional.get();
+            return true;
         }
-        return null;
+        return false;
 
     }
 
